@@ -46,3 +46,9 @@ config :logger, level: :info
 #
 #     config :elixir_letters, ElixirLetters.Endpoint, server: true
 #
+
+# Configure your database
+config :elixir_letters, ElixirLetters.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  size: 20 # The amount of database connections in the pool
