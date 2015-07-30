@@ -40,13 +40,19 @@ class App {
       scrollTo(0, document.body.scrollHeight)
     })
 
+    chan.on("new:position", position => {
+      console.log("position received: ", position.body)
+      $draggable.css('left', position.body.left)
+      $draggable.css('top', position.body.top)
+    })
+
     chan.on("user:entered", msg => {
       const username = this.sanitize(msg.user || "anonymous")
       $messages.append(`<br/><i>[${username} entered]</i>`)
     })
 
     $draggable.on( "dragstop", (e, ui) => {
-      console.log(`${e}: ${ui}`)
+      chan.push("new:position", {user: $username.val(), body: { left: ui.position.left, top: ui.position.top }})
     })
 
     $draggable.draggable()
