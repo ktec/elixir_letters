@@ -17,7 +17,7 @@ class App {
     const $messages  = $("#messages")
     const $input     = $("#message-input")
     const $username  = $("#username")
-    const $draggable = $("#draggable")
+    const $draggable = $(".draggable")
 
     socket.onClose( e => console.log("CLOSE", e))
 
@@ -40,10 +40,11 @@ class App {
       scrollTo(0, document.body.scrollHeight)
     })
 
-    chan.on("new:position", position => {
-      console.log("position received: ", position.body)
-      $draggable.css('left', position.body.left)
-      $draggable.css('top', position.body.top)
+    chan.on("new:position", msg => {
+      let letter = $("#" + msg.body.id)
+       console.log("position received: ", letter)
+       letter.css('left', msg.body.left)
+       letter.css('top', msg.body.top)
     })
 
     chan.on("user:entered", msg => {
@@ -52,7 +53,7 @@ class App {
     })
 
     $draggable.on( "dragstop", (e, ui) => {
-      chan.push("new:position", {user: $username.val(), body: { left: ui.position.left, top: ui.position.top }})
+      chan.push("new:position", {user: $username.val(), body: { id: e.target.id, left: ui.position.left, top: ui.position.top }})
     })
 
     $draggable.draggable()

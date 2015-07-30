@@ -15,4 +15,6 @@
     </div><!-- /.row -->
   </div>
 </div>
-<div id="draggable">Drag me</div>
+<div class="letters a draggable" id="letter-1"></div>
+<div class="letters b draggable" id="letter-2"></div>
+<div class="letters c draggable" id="letter-3"></div>

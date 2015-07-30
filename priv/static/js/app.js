@@ -149,7 +149,7 @@ var App = (function () {
       var $messages = $("#messages");
       var $input = $("#message-input");
       var $username = $("#username");
-      var $draggable = $("#draggable");
+      var $draggable = $(".draggable");
 
       socket.onClose(function (e) {
         return console.log("CLOSE", e);
@@ -182,10 +182,11 @@ var App = (function () {
         scrollTo(0, document.body.scrollHeight);
       });
 
-      chan.on("new:position", function (position) {
-        console.log("position received: ", position.body);
-        $draggable.css('left', position.body.left);
-        $draggable.css('top', position.body.top);
+      chan.on("new:position", function (msg) {
+        var letter = $("#" + msg.body.id);
+        console.log("position received: ", letter);
+        letter.css('left', msg.body.left);
+        letter.css('top', msg.body.top);
       });
 
       chan.on("user:entered", function (msg) {
@@ -194,7 +195,7 @@ var App = (function () {
       });
 
       $draggable.on("dragstop", function (e, ui) {
-        chan.push("new:position", { user: $username.val(), body: { left: ui.position.left, top: ui.position.top } });
+        chan.push("new:position", { user: $username.val(), body: { id: e.target.id, left: ui.position.left, top: ui.position.top } });
       });
 
       $draggable.draggable();

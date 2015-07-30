@@ -78,3 +78,11 @@ form.link, form.button {
     border-bottom: 0;
   }
 }
+
+.letters {
+  background: url("/images/letters.jpg") no-repeat top left;
+  width: 140px; height: 140px;
+}
+.letters.a { background-position: -30px -70px; }
+.letters.b { background-position: -180px -70px; }
+.letters.c { background-position: -310px -70px; }

@@ -5215,5 +5215,23 @@ form.link, form.button {
   .jumbotron {
     border-bottom: 0; } }
 
+/* line 82, stdin */
+.letters {
+  background: url("/images/letters.jpg") no-repeat top left;
+  width: 140px;
+  height: 140px; }
+
+/* line 86, stdin */
+.letters.a {
+  background-position: -30px -70px; }
+
+/* line 87, stdin */
+.letters.b {
+  background-position: -180px -70px; }
+
+/* line 88, stdin */
+.letters.c {
+  background-position: -310px -70px; }
+
 
 /*# sourceMappingURL=app.css.map*/

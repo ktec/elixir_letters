@@ -42,8 +42,8 @@ defmodule ElixirLetters.RoomChannel do
     {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
   end
 
-  def handle_in("new:position", position, socket) do
-    broadcast! socket, "new:position", %{user: position["user"], body: position["body"]}
-    {:reply, {:ok, %{position: position["body"]}}, assign(socket, :user, position["user"])}
+  def handle_in("new:position", msg, socket) do
+    broadcast! socket, "new:position", %{user: msg["user"], body: msg["body"]}
+    {:reply, {:ok, %{position: msg["body"]}}, assign(socket, :user, msg["user"])}
   end
 end
