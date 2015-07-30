@@ -13,14 +13,15 @@ class App {
       logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) }
     })
     socket.connect()
-    var $status    = $("#status")
-    var $messages  = $("#messages")
-    var $input     = $("#message-input")
-    var $username  = $("#username")
+    const $status    = $("#status")
+    const $messages  = $("#messages")
+    const $input     = $("#message-input")
+    const $username  = $("#username")
+    const $draggable = $("#draggable")
 
     socket.onClose( e => console.log("CLOSE", e))
 
-    var chan = socket.chan("rooms:lobby", {})
+    const chan = socket.chan("rooms:lobby", {})
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
@@ -40,9 +41,16 @@ class App {
     })
 
     chan.on("user:entered", msg => {
-      var username = this.sanitize(msg.user || "anonymous")
+      const username = this.sanitize(msg.user || "anonymous")
       $messages.append(`<br/><i>[${username} entered]</i>`)
     })
+
+    $draggable.on( "dragstop", (e, ui) => {
+      console.log(`${e}: ${ui}`)
+    })
+
+    $draggable.draggable()
+
   }
 
   static sanitize(html){ return $("<div/>").text(html).html() }
@@ -53,6 +61,55 @@ class App {
 
     return(`<p><a href='#'>[${username}]</a>&nbsp; ${body}</p>`)
   }
+
+/*
+  //Global constiable as Chrome doesnt allow access to event.dataTransfer in dragover
+
+  const offset_data = ""
+
+  static function drag_start(event) {
+      const style = window.getComputedStyle(event.target, null)
+      offset_data =
+        (parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' +
+        (parseInt(style.getPropertyValue("top"),10) - event.clientY)
+      event.dataTransfer.setData("text/plain",offset_data)
+  }
+
+  static function drag_over(event) {
+      const offset
+      try {
+          offset = event.dataTransfer.getData("text/plain").split(',')
+      }
+      catch(e) {
+          offset = offset_data.split(',')
+      }
+      const dm = document.getElementById('dragme')
+      dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px'
+      dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px'
+      event.preventDefault()
+      return false
+  }
+
+  static function drop(event) {
+      const offset
+      try {
+          offset = event.dataTransfer.getData("text/plain").split(',')
+      }
+      catch(e) {
+          offset = offset_data.split(',')
+      }
+      const dm = document.getElementById('dragme')
+      dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px'
+      dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px'
+      event.preventDefault()
+      return false
+  }
+  const dm = document.getElementById('dragme')
+  dm.addEventListener('dragstart',drag_start,false)
+  document.body.addEventListener('dragover',drag_over,false)
+  document.body.addEventListener('drop',drop,false)
+  */
+
 }
 
 $( () => App.init() )
