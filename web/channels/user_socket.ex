@@ -3,6 +3,7 @@ defmodule ElixirLetters.UserSocket do
 
   ## Channels
   channel "rooms:*", ElixirLetters.RoomChannel
+  #channel "positions:lobby", PositionRoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

@@ -170,21 +170,28 @@ var App = (function () {
         return console.log("channel closed", e);
       });
 
-      $input.off("keypress").on("keypress", function (e) {
-        if (e.keyCode == 13) {
-          chan.push("new:msg", { user: $username.val(), body: $input.val() });
-          $input.val("");
+      // $input.off("keypress").on("keypress", e => {
+      //   if (e.keyCode == 13) {
+      //     chan.push("new:msg", {user: $username.val(), body: $input.val()})
+      //     $input.val("")
+      //   }
+      // })
+
+      chan.on("join", function (msg) {
+        for (var letter in msg.positions) {
+          var element = $("#" + letter);
+          element.css('top', msg.positions[letter].top);
+          element.css('left', msg.positions[letter].left);
         }
       });
 
-      chan.on("new:msg", function (msg) {
-        $messages.append(_this.messageTemplate(msg));
-        scrollTo(0, document.body.scrollHeight);
-      });
+      // chan.on("new:msg", msg => {
+      //   $messages.append(this.messageTemplate(msg))
+      //   scrollTo(0, document.body.scrollHeight)
+      // })
 
       chan.on("new:position", function (msg) {
         var letter = $("#" + msg.body.id);
-        console.log("position received: ", letter);
         letter.css('left', msg.body.left);
         letter.css('top', msg.body.top);
       });
@@ -195,24 +202,24 @@ var App = (function () {
       });
 
       $draggable.on("dragstop", function (e, ui) {
-        chan.push("new:position", { user: $username.val(), body: { id: e.target.id, left: ui.position.left, top: ui.position.top } });
+        chan.push("new:position", {
+          user: $username.val(), body: {
+            id: e.target.id, left: ui.position.left, top: ui.position.top
+          }
+        });
       });
 
       $draggable.draggable();
     }
-  }, {
-    key: "sanitize",
-    value: function sanitize(html) {
-      return $("<div/>").text(html).html();
-    }
-  }, {
-    key: "messageTemplate",
-    value: function messageTemplate(msg) {
-      var username = this.sanitize(msg.user || "anonymous");
-      var body = this.sanitize(msg.body);
 
-      return "<p><a href='#'>[" + username + "]</a>&nbsp; " + body + "</p>";
-    }
+    // static sanitize(html){ return $("<div/>").text(html).html() }
+    //
+    // static messageTemplate(msg){
+    //   let username = this.sanitize(msg.user || "anonymous")
+    //   let body     = this.sanitize(msg.body)
+    //
+    //   return(`<p><a href='#'>[${username}]</a>&nbsp; ${body}</p>`)
+    // }
 
     /*
       //Global constiable as Chrome doesnt allow access to event.dataTransfer in dragover

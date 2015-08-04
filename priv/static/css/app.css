@@ -5215,35 +5215,25 @@ form.link, form.button {
   .jumbotron {
     border-bottom: 0; } }
 
-/* line 82, stdin */
+@font-face {
+  font-family: 'alphafridgemagnets_regular';
+  src: url('/fonts/alphafridgemagnets-webfont.eot');
+  src: url('/fonts/alphafridgemagnets-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/alphafridgemagnets-webfont.woff2') format('woff2'), url('/fonts/alphafridgemagnets-webfont.woff') format('woff'), url('/fonts/alphafridgemagnets-webfont.ttf') format('truetype'), url('/fonts/alphafridgemagnets-webfont.svg#alphafridgemagnets_regular') format('svg');
+  font-weight: normal;
+  font-style: normal; }
+
+/* line 95, stdin */
 .letters {
-  background: url("/images/letters.jpg") no-repeat top left;
-  width: 140px;
-  height: 140px; }
-
-/* line 86, stdin */
-.letters.a {
-  background-position: -30px -70px; }
-
-/* line 87, stdin */
-.letters.b {
-  background-position: -180px -70px; }
-
-/* line 88, stdin */
-.letters.c {
-  background-position: -310px -70px; }
-
-/* line 89, stdin */
-.letters.d {
-  background-position: -440px -70px; }
-
-/* line 90, stdin */
-.letters.e {
-  background-position: -570px -70px; }
-
-/* line 91, stdin */
-.letters.f {
-  background-position: -710px -70px; }
+  /* background: url("/images/letters.jpg") no-repeat top left; */
+  width: 100px;
+  height: 100px;
+  font-family: 'alphafridgemagnets_regular';
+  font-size: 100px;
+  background-color: blue;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px; }
 
 
 /*# sourceMappingURL=app.css.map*/
