@@ -26,7 +26,6 @@ defmodule ElixirLetters.RoomChannel do
     Logger.debug "> join #{socket.topic}"
     broadcast! socket, "user:entered", %{user: msg["user"]}
     positions = PositionServer.get_positions
-    Logger.debug "> positions #{inspect   positions}"
     push socket, "join", %{status: "connected", positions: positions}
     {:noreply, socket}
   end
@@ -48,16 +47,11 @@ defmodule ElixirLetters.RoomChannel do
 
   def handle_in("new:position", payload, socket) do
     %{"id" => letter_id, "left" => left, "top" => top} = payload["body"]
-    Logger.debug"> handle_in #{inspect letter_id}"
-    Logger.debug"> handle_in #{inspect top}"
-    Logger.debug"> handle_in #{inspect left}"
-
     PositionServer.update_position(
        payload["user"],
-       letter_id,
-       [top,left]
+       payload["body"]
     )
-    #broadcast! socket, "new:position", %{user: payload["user"], body: payload["body"]}
+    broadcast! socket, "new:position", %{user: payload["user"], body: payload["body"]}
     {:reply, {:ok, %{position: payload["body"]}}, assign(socket, :user, payload["user"])}
   end
 

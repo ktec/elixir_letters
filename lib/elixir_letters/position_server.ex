@@ -6,10 +6,10 @@ defmodule ElixirLetters.PositionServer do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
-  def update_position(user_id, letter_id, coordinates) do
+  def update_position(user_id, position) do
     GenServer.call(
       __MODULE__,
-      {:update_position, user_id, letter_id, coordinates}
+      {:update_position, user_id, position}
     )
   end
 
@@ -17,11 +17,9 @@ defmodule ElixirLetters.PositionServer do
     GenServer.call(__MODULE__, :get_positions)
   end
 
-  def handle_call({:update_position, user_id, letter_id, coordinates}, _caller, positions) do
-    positions = Map.put(positions, letter_id, coordinates)
-    Logger.debug"> handle_call #{inspect user_id}"
-    Logger.debug"> handle_call #{inspect letter_id}"
-    Logger.debug"> handle_call #{inspect coordinates}"
+  def handle_call({:update_position, user_id, position}, _caller, positions) do
+    %{"id" => letter_id, "left" => left, "top" => top} = position
+    positions = Map.put(positions, letter_id, position)
     {:reply, :ok, positions}
   end
 
