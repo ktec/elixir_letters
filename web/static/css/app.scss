@@ -93,25 +93,24 @@ form.link, form.button {
 }
 
 .letters {
-  /* background: url("/images/letters.jpg") no-repeat top left; */
-  width: 100px; height: 100px;
+  width: 50px; height: 50px;
   font-family: 'alphafridgemagnets_regular';
-  font-size: 100px;
-  background-color: blue;
+  font-size: 50px;
   float:left;
   text-align: center;
   vertical-align: middle;
-  line-height: 100px;   
+  line-height: 50px;
+  cursor:move;
+  text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 10px 10px rgba(0,0,0,.2),
+                 0 20px 20px rgba(0,0,0,.15);
 }
-// .letters.a { background-position: -30px -70px; }
-// .letters.b { background-position: -180px -70px; }
-// .letters.c { background-position: -310px -70px; }
-// .letters.d { background-position: -440px -70px; }
-// .letters.e { background-position: -570px -70px; }
-// .letters.f { background-position: -710px -90px; }
-// .letters.g { background-position: -850px -115px; }
-// .letters.h { background-position: -30px -285px; }
-// .letters.i { background-position: -180px -290px; }
-// .letters.j { background-position: -310px -290px; }
-// .letters.k { background-position: -440px -308px; }
-// .letters.l { background-position: -560px -308px; }
