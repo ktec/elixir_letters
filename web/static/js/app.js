@@ -35,6 +35,13 @@ class App {
       }
     })
 
+    chan.on("join", msg=>{
+      for (var letter in msg.positions){
+        //$("#" + )
+        alert(letter + " = " + msg.positions[letter])
+      }
+    })
+
     chan.on("new:msg", msg => {
       $messages.append(this.messageTemplate(msg))
       scrollTo(0, document.body.scrollHeight)
@@ -53,7 +60,11 @@ class App {
     })
 
     $draggable.on( "dragstop", (e, ui) => {
-      chan.push("new:position", {user: $username.val(), body: { id: e.target.id, left: ui.position.left, top: ui.position.top }})
+      chan.push("new:position", {
+        user: $username.val(), body: {
+          id: e.target.id, left: ui.position.left, top: ui.position.top
+        }
+      })
     })
 
     $draggable.draggable()

@@ -177,6 +177,13 @@ var App = (function () {
         }
       });
 
+      chan.on("join", function (msg) {
+        for (var letter in msg.positions) {
+          //$("#" + )
+          alert(letter + " = " + msg.positions[letter]);
+        }
+      });
+
       chan.on("new:msg", function (msg) {
         $messages.append(_this.messageTemplate(msg));
         scrollTo(0, document.body.scrollHeight);
@@ -195,7 +202,11 @@ var App = (function () {
       });
 
       $draggable.on("dragstop", function (e, ui) {
-        chan.push("new:position", { user: $username.val(), body: { id: e.target.id, left: ui.position.left, top: ui.position.top } });
+        chan.push("new:position", {
+          user: $username.val(), body: {
+            id: e.target.id, left: ui.position.left, top: ui.position.top
+          }
+        });
       });
 
       $draggable.draggable();

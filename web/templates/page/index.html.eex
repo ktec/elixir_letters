@@ -15,6 +15,6 @@
     </div><!-- /.row -->
   </div>
 </div>
-<%= for item <- ['a','b','c'] do %>
+<%= for c <- ?a..?z, item = List.to_string([c]) do %>
   <div class="letters <%= item %> draggable" id="letter-<%= item %>"></div>
 <% end %>

@@ -1,5 +1,6 @@
 defmodule ElixirLetters.RoomChannel do
   use Phoenix.Channel
+  alias ElixirLetters.PositionServer
   require Logger
 
   @doc """
@@ -24,9 +25,12 @@ defmodule ElixirLetters.RoomChannel do
   def handle_info({:after_join, msg}, socket) do
     Logger.debug "> join #{socket.topic}"
     broadcast! socket, "user:entered", %{user: msg["user"]}
-    push socket, "join", %{status: "connected"}
+    positions = PositionServer.get_positions
+    Logger.debug "> positions #{inspect   positions}"
+    push socket, "join", %{status: "connected", positions: positions}
     {:noreply, socket}
   end
+
   def handle_info(:ping, socket) do
     push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
     {:noreply, socket}
@@ -42,8 +46,19 @@ defmodule ElixirLetters.RoomChannel do
     {:reply, {:ok, %{msg: msg["body"]}}, assign(socket, :user, msg["user"])}
   end
 
-  def handle_in("new:position", msg, socket) do
-    broadcast! socket, "new:position", %{user: msg["user"], body: msg["body"]}
-    {:reply, {:ok, %{position: msg["body"]}}, assign(socket, :user, msg["user"])}
+  def handle_in("new:position", payload, socket) do
+    %{"id" => letter_id, "left" => left, "top" => top} = payload["body"]
+    Logger.debug"> handle_in #{inspect letter_id}"
+    Logger.debug"> handle_in #{inspect top}"
+    Logger.debug"> handle_in #{inspect left}"
+
+    PositionServer.update_position(
+       payload["user"],
+       letter_id,
+       [top,left]
+    )
+    #broadcast! socket, "new:position", %{user: payload["user"], body: payload["body"]}
+    {:reply, {:ok, %{position: payload["body"]}}, assign(socket, :user, payload["user"])}
   end
+
 end
