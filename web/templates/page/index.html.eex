@@ -1,32 +1,35 @@
 <% letters = %{
-  "E" => 125,
-  "T" => 92,
-  "A" => 80,
-  "O" => 76,
-  "I" => 72,
-  "N" => 70,
-  "S" => 65,
-  "R" => 61,
-  "H" => 54,
-  "L" => 41,
-  "D" => 39,
-  "C" => 30,
-  "U" => 27,
-  "M" => 25,
-  "F" => 23,
-  "P" => 20,
-  "G" => 19,
-  "W" => 19,
-  "Y" => 17,
-  "B" => 15,
-  "V" => 9,
-  "K" => 6,
+  "E" => 12,
+  "T" => 9,
+  "A" => 8,
+  "O" => 7,
+  "I" => 7,
+  "N" => 7,
+  "S" => 6,
+  "R" => 6,
+  "H" => 5,
+  "L" => 4,
+  "D" => 3,
+  "C" => 3,
+  "U" => 2,
+  "M" => 2,
+  "F" => 2,
+  "P" => 2,
+  "G" => 1,
+  "W" => 1,
+  "Y" => 1,
+  "B" => 1,
+  "V" => 1,
+  "K" => 1,
   "X" => 1,
   "J" => 1,
   "Q" => 1,
-  "Z" => 1} %>
-<div id="letters" class="container">
+  "Z" => 1};
+
+  colours = ["#ce1e0c","#466dda","#03c03c","#ff0000","#f6e253"]
+   %>
+<div id="letters-container" class="container">
 <%= for {letter, count} <- letters, letter_copy <- 1..count do %>
-<div class="letters draggable" id="letter-<%= letter %><%= letter_copy %>"><%= letter %></div>
+<div class="letter draggable" style="color: <%= colours |> Enum.shuffle |> Enum.take(1) %>" id="letter-<%= letter %><%= letter_copy %>"><%= letter %></div>
 <% end %>
 </div>

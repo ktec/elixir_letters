@@ -12,12 +12,25 @@ class App {
     let socket = new Socket("/socket", {
       logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) }
     })
+
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+    }
+
     socket.connect()
     const $status    = $("#status")
     const $messages  = $("#messages")
     const $input     = $("#message-input")
-    const $username  = $("#username")
+    //const $username  = $("#username")
     const $draggable = $(".draggable")
+
+    let $username = guid();
 
     socket.onClose( e => console.log("CLOSE", e))
 
@@ -28,13 +41,6 @@ class App {
     chan.onError(e => console.log("something went wrong", e))
     chan.onClose(e => console.log("channel closed", e))
 
-    // $input.off("keypress").on("keypress", e => {
-    //   if (e.keyCode == 13) {
-    //     chan.push("new:msg", {user: $username.val(), body: $input.val()})
-    //     $input.val("")
-    //   }
-    // })
-
     chan.on("join", msg=>{
       for (var letter in msg.positions){
         let element = $("#" + letter)
@@ -43,90 +49,32 @@ class App {
       }
     })
 
-    // chan.on("new:msg", msg => {
-    //   $messages.append(this.messageTemplate(msg))
-    //   scrollTo(0, document.body.scrollHeight)
-    // })
-
     chan.on("new:position", msg => {
-      let letter = $("#" + msg.body.id)
-       letter.css('left', msg.body.left)
-       letter.css('top', msg.body.top)
+      if (msg.user != $username){
+        let letter = $("#" + msg.body.id)
+        letter.css('left', msg.body.left)
+        letter.css('top', msg.body.top)
+      }
     })
 
-    chan.on("user:entered", msg => {
-      const username = this.sanitize(msg.user || "anonymous")
-      $messages.append(`<br/><i>[${username} entered]</i>`)
-    })
-
-    $draggable.on( "drag", (e, ui) => {
+    $draggable.on("drag", (e, ui) => {
       chan.push("new:position", {
-        user: $username.val(), body: {
+        user: $username, body: {
           id: e.target.id, left: ui.position.left, top: ui.position.top
         }
       })
+      $(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
+    })
+
+    $draggable.on("dragstart", (e, ui) => {
+    })
+
+    $draggable.on("dragstop", (e, ui) => {
     })
 
     $draggable.draggable()
 
   }
-
-  // static sanitize(html){ return $("<div/>").text(html).html() }
-  //
-  // static messageTemplate(msg){
-  //   let username = this.sanitize(msg.user || "anonymous")
-  //   let body     = this.sanitize(msg.body)
-  //
-  //   return(`<p><a href='#'>[${username}]</a>&nbsp; ${body}</p>`)
-  // }
-
-/*
-  //Global constiable as Chrome doesnt allow access to event.dataTransfer in dragover
-
-  const offset_data = ""
-
-  static function drag_start(event) {
-      const style = window.getComputedStyle(event.target, null)
-      offset_data =
-        (parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' +
-        (parseInt(style.getPropertyValue("top"),10) - event.clientY)
-      event.dataTransfer.setData("text/plain",offset_data)
-  }
-
-  static function drag_over(event) {
-      const offset
-      try {
-          offset = event.dataTransfer.getData("text/plain").split(',')
-      }
-      catch(e) {
-          offset = offset_data.split(',')
-      }
-      const dm = document.getElementById('dragme')
-      dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px'
-      dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px'
-      event.preventDefault()
-      return false
-  }
-
-  static function drop(event) {
-      const offset
-      try {
-          offset = event.dataTransfer.getData("text/plain").split(',')
-      }
-      catch(e) {
-          offset = offset_data.split(',')
-      }
-      const dm = document.getElementById('dragme')
-      dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px'
-      dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px'
-      event.preventDefault()
-      return false
-  }
-  const dm = document.getElementById('dragme')
-  dm.addEventListener('dragstart',drag_start,false)
-  document.body.addEventListener('dragover',drag_over,false)
-  document.body.addEventListener('drop',drop,false)
-  */
 
 }
 

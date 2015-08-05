@@ -92,14 +92,27 @@ form.link, form.button {
 
 }
 
-.letters {
-  width: 30px; height: 30px;
+body {
+  background-image: url('/images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+#letters-container {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  width: 264px;
+  height: 100%;
+}
+
+.letter {
+  width: 40px; height: 40px;
   font-family: 'alphafridgemagnets_regular';
-  font-size: 30px;
+  font-size: 40px;
   float:left;
   text-align: center;
   vertical-align: middle;
-  line-height: 30px;
+  line-height: 40px;
   cursor:move;
   text-shadow: 0 1px 0 #ccc,
                  0 2px 0 #c9c9c9,

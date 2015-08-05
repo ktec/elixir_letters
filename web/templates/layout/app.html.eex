@@ -35,12 +35,6 @@
     </div>
 
 
-    <br>
-    <br>
-    <br>
-    <br>
-
-
     <!-- Begin page content -->
     <%= @inner %>
 
