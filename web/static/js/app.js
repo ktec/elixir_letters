@@ -59,7 +59,7 @@ class App {
       $messages.append(`<br/><i>[${username} entered]</i>`)
     })
 
-    $draggable.on( "dragstop", (e, ui) => {
+    $draggable.on( "drag", (e, ui) => {
       chan.push("new:position", {
         user: $username.val(), body: {
           id: e.target.id, left: ui.position.left, top: ui.position.top
