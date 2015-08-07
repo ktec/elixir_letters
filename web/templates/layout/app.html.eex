@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Multiplayer Fridge Magnets game written in the blazing fast elixir lang, running on the ultra powerful erlang vm, hosted by the delightfully easy heroku, sponsored by the smarts from Alliants.">
+    <meta name="author" content="Keith Salisbury aka globalkeith">
 
     <title>Hello Phoenix!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
@@ -29,11 +29,11 @@
           <ul class="nav navbar-nav pull-right">
             <li><a href="https://github.com/ktec/elixir_letters">source</a></li>
             <li><a href="http://github.com/phoenixframework/phoenix">Learn more about the Phoenix Framework</a></li>
+            <li>User Count: <span id="user_count"></span></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
-
 
     <!-- Begin page content -->
     <%= @inner %>

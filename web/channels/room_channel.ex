@@ -12,9 +12,7 @@ defmodule ElixirLetters.RoomChannel do
   """
   def join("rooms:lobby", message, socket) do
     Process.flag(:trap_exit, true)
-    #:timer.send_interval(5000, :ping)
     send(self, {:after_join, message})
-
     {:ok, socket}
   end
 
@@ -24,19 +22,18 @@ defmodule ElixirLetters.RoomChannel do
 
   def handle_info({:after_join, msg}, socket) do
     Logger.debug "> join #{socket.topic}"
-    broadcast! socket, "user:entered", %{user: msg["user"]}
-    positions = PositionServer.get_positions
-    push socket, "join", %{status: "connected", positions: positions}
+    %{"userid" => user_id} = msg
+    socket = assign(socket, :user_id, user_id)
+    PositionServer.add_user(user_id,{})
+    broadcast! socket, "user_count:update", %{user_count: PositionServer.get_user_count}
+    push socket, "join", %{status: "connected", positions: PositionServer.get_positions}
     {:noreply, socket}
   end
 
-  def handle_info(:ping, socket) do
-    push socket, "new:msg", %{user: "SYSTEM", body: "ping"}
-    {:noreply, socket}
-  end
-
-  def terminate(reason, _socket) do
-    Logger.debug"> leave #{inspect reason}"
+  def terminate(reason, socket) do
+    Logger.debug "> leave #{inspect reason}"
+    PositionServer.remove_user(socket.assigns.user_id)
+    broadcast! socket, "user_count:update", %{user_count: PositionServer.get_user_count}
     :ok
   end
 

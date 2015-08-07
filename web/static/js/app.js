@@ -34,7 +34,7 @@ class App {
 
     socket.onClose( e => console.log("CLOSE", e))
 
-    const chan = socket.chan("rooms:lobby", {})
+    const chan = socket.chan("rooms:lobby", {userid:$username})
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
@@ -47,6 +47,11 @@ class App {
         $("#" + letter).css('top', msg.positions[letter].top)
         $("#" + letter).css('left', msg.positions[letter].left)
       }
+      $("#letters-container").show();
+    })
+
+    chan.on("user_count:update", msg => {
+      $("#user_count").text(msg.user_count)
     })
 
     chan.on("new:position", msg => {
