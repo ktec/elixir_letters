@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Multiplayer Fridge Magnets game written in the blazing fast elixir lang, running on the ultra powerful erlang vm, hosted by the delightfully easy heroku, sponsored by the smarts from Alliants.">
+    <meta name="description" content="Multiplayer Fridge Magnets game written in the blazing fast elixir lang, running on the ultra powerful erlang vm, hosted by the delightfully easy heroku, sponsored by the smarts from Alliants and the invaluable consultation from Ventsi.">
     <meta name="author" content="Keith Salisbury aka globalkeith">
 
     <title>Hello Phoenix!</title>
