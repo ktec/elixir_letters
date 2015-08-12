@@ -29,7 +29,7 @@
           <ul class="nav navbar-nav pull-right">
             <li><a href="https://github.com/ktec/elixir_letters">source</a></li>
             <li><a href="http://github.com/phoenixframework/phoenix">Learn more about the Phoenix Framework</a></li>
-            <li>User Count: <span id="user_count"></span></li>
+            <li><a>User Count: <span id="user_count"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
