@@ -107,25 +107,52 @@ div#content {
   display: none;
 }
 
+// .letter {
+//   width: 40px; height: 40px;
+//   font-family: 'alphafridgemagnets_regular';
+//   font-size: 40px;
+//   float:left;
+//   text-align: center;
+//   vertical-align: middle;
+//   line-height: 40px;
+//   cursor:move;
+//   text-shadow: 0 1px 0 #ccc,
+//                  0 2px 0 #c9c9c9,
+//                  0 3px 0 #bbb,
+//                  0 4px 0 #b9b9b9,
+//                  0 5px 0 #aaa,
+//                  0 6px 1px rgba(0,0,0,.1),
+//                  0 0 5px rgba(0,0,0,.1),
+//                  0 1px 3px rgba(0,0,0,.3),
+//                  0 3px 5px rgba(0,0,0,.2),
+//                  0 5px 10px rgba(0,0,0,.25),
+//                  0 10px 10px rgba(0,0,0,.2),
+//                  0 20px 20px rgba(0,0,0,.15);
+// }
+
 .letter {
   width: 40px; height: 40px;
   font-family: 'alphafridgemagnets_regular';
   font-size: 40px;
+  font-weight: bold;
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9 , 0 3px 0 #bbb, 0 4px 0 #b9b9b9 , 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
   float:left;
   text-align: center;
   vertical-align: middle;
   line-height: 40px;
   cursor:move;
-  text-shadow: 0 1px 0 #ccc,
-                 0 2px 0 #c9c9c9,
-                 0 3px 0 #bbb,
-                 0 4px 0 #b9b9b9,
-                 0 5px 0 #aaa,
-                 0 6px 1px rgba(0,0,0,.1),
-                 0 0 5px rgba(0,0,0,.1),
-                 0 1px 3px rgba(0,0,0,.3),
-                 0 3px 5px rgba(0,0,0,.2),
-                 0 5px 10px rgba(0,0,0,.25),
-                 0 10px 10px rgba(0,0,0,.2),
-                 0 20px 20px rgba(0,0,0,.15);
 }
+
+// .user-count {
+//   /*Step 2: Basic Button Styles*/
+//  height: 100px;
+//  width: 300px;
+//  background: #34696f;
+//  border: 2px solid rgba(33, 68, 72, 0.59);
+//
+//  /*Step 3: Text Styles*/
+//  color: rgba(0, 0, 0, 0.55);
+//  text-align: center;
+//  font: bold 3.2em/100px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+//
+// }
