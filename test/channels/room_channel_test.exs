@@ -1,10 +1,10 @@
-defmodule ElixirLetters.PositionRoomChannelTest do
+defmodule ElixirLetters.RoomChannelTest do
   use ElixirLetters.ChannelCase
 
-  alias ElixirLetters.PositionRoomChannel
+  alias ElixirLetters.RoomChannel
 
   setup do
-    {:ok, _, socket} = subscribe_and_join(PositionRoomChannel, "positions:lobby")
+    {:ok, _, socket} = subscribe_and_join(RoomChannel, "positions:lobby")
     {:ok, socket: socket}
   end
 
