@@ -18,7 +18,7 @@ defmodule ElixirLetters.Mixfile do
   def application do
     [mod: {ElixirLetters, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :poison]]
   end
 
   # Specifies which paths to compile per environment
@@ -34,6 +34,7 @@ defmodule ElixirLetters.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 1.4"},
      {:phoenix_live_reload, "~> 0.5", only: :dev},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:poison, "~> 1.0"}]
   end
 end

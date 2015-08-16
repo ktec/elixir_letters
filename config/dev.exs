@@ -29,5 +29,6 @@ config :logger, :console, format: "[$level] $message\n"
 # Configure your database
 config :elixir_letters, ElixirLetters.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
+  #url: System.get_env("DATABASE_URL"),
+  url: "postgres://globalkeith@localhost/elixir_letters_dev",
   size: 10 # The amount of database connections in the pool

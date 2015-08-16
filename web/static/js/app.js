@@ -75,6 +75,7 @@ class App {
     })
 
     $draggable.on("dragstop", (e, ui) => {
+      chan.push("save_snapshot", {});
     })
 
     $draggable.draggable()
