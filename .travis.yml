@@ -1,0 +1,21 @@
+language: elixir
+otp_release:
+  - 17.4
+addons:
+  postgresql: '9.3'
+before_script:
+  - npm install -g brunch
+  - npm install
+  - brunch build --production
+  - mix phoenix.digest
+  - git add priv && git commit -m "Heroku assets"
+  - mix do deps.get, deps.compile, ecto.create, ecto.migrate
+deploy:
+  provider: heroku
+  app: location-game
+  buildpack: https://github.com/HashNuke/heroku-buildpack-elixir.git
+  strategy: git-ssh
+  api_key:
+    secure: WKtXW9DEgfz8ZDFmDaXkyEQKHQM8oi+n73KOUc3L1do0zpduI0UxHYJdTloO1+7+ZZkPuZXzgYZF4H9aArZmbUCyLX9FKGzNL34YroxbGJXFpuYvfrrDiCBtTdS283LOL+2ymDVm90oJpvbWNQv85sThgtX6Mez0kWRkV1EfLO9VgCtWliBAuTvIUy0bLW3pa52zWc2ipr90+P6Y2krnQPVrj8WaG0E1k6nA/dnBgPHyeQxsekiyBbY9hcmAZ0aNCGd1TzcdRzguGjXvTpf5lOuYAk+j1HPGFfIvC7Oei36HaOqsOQMnm8Ab6xpzucPqgi7MLG/8ut5ByfpkM0/HqXY/fCjJgj48AdjOxuFIKPW6JwB2UyaEvOwitIMpDntscLmmFHqWN2TBTfVoxCfOb6Shfac/cNHBPzPX9a3S5aou017HONtwer/IeKelwnOGFVK7l/PKT6imCHgiUjV1c+Rjl54wd40thdgbcsB6yE7cV+gyivlEwXXl5KuKgI6Tns2dcDbl4NiWNY1ONzSJI3q8ITW7bBGHXRS0dfvC+mKiNgyCWAey+xTf1E39O7JJ5Tf65QXHaszakqTOKrLx8x9d5bcavm60EZ8v2gw5tCaVMD2mJb998Qfl5A+Jf9ZBX2O8G/ytREODZtxjsjnA6WH2X0tn/t6kGV4vvVQot28=
+after_deploy:
+  - heroku run "mix ecto.migrate" -a elixir-letters
