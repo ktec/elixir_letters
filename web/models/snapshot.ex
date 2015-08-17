@@ -20,4 +20,11 @@ defmodule ElixirLetters.Snapshot do
     model
     |> cast(params, @required_fields, @optional_fields)
   end
+
+  def last(query) do
+    from p in query,
+    order_by: [desc: p.id],
+    limit: 1
+  end
+  
 end

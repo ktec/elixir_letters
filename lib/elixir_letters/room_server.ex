@@ -2,6 +2,7 @@ defmodule ElixirLetters.RoomServer do
   use GenServer
   alias ElixirLetters.Repo
   alias ElixirLetters.Snapshot
+  import Ecto.Query
   require Logger
 
   defmodule Room do
@@ -13,7 +14,10 @@ defmodule ElixirLetters.RoomServer do
   end
 
   def start_link do
-    GenServer.start_link(__MODULE__, %Room{}, name: __MODULE__)
+    state = %Room{}
+    last_snapshot = Snapshot |> Snapshot.last |> Repo.one
+    state = %Room{state | positions: last_snapshot.positions}
+    GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
   def update_position(user_id, position) do
@@ -67,11 +71,11 @@ defmodule ElixirLetters.RoomServer do
   end
 
   def handle_call(:save_snapshot, _from, state) do
-    Logger.debug "> positions: #{inspect state.positions}"
     changeset = Snapshot.changeset %Snapshot{}, %{positions: state.positions}
 
     if changeset.valid? do
       _msg = Repo.insert!(changeset)
+
       #{:reply, {:ok, msg}, state}
       {:reply, :ok, state}
     else
