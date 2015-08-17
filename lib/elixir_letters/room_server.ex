@@ -16,7 +16,9 @@ defmodule ElixirLetters.RoomServer do
   def start_link do
     state = %Room{}
     last_snapshot = Snapshot |> Snapshot.last |> Repo.one
-    state = %Room{state | positions: last_snapshot.positions}
+    unless is_nil last_snapshot do
+      state = %Room{state | positions: last_snapshot.positions}
+    end
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 
