@@ -52,6 +52,11 @@ defmodule ElixirLetters.RoomChannel do
     {:reply, {:ok, %{position: payload["body"]}}, assign(socket, :user, payload["user"])}
   end
 
+  def handle_in("mousemove", payload, socket) do
+    broadcast! socket, "mousemove", payload
+    {:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
+  end
+
   def handle_in("save_snapshot", _payload, socket) do
     _msg = RoomServer.save_snapshot()
     #{:reply, {:ok, msg}, socket}

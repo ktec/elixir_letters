@@ -110,6 +110,13 @@ div#content {
   background: transparent;
 }
 
+.mouse {
+  background: url(/images/cursor.png) no-repeat scroll center top transparent;
+  width: 32px;
+  height: 42px;
+  position: relative;
+}
+
 .letter {
   float:left;
   text-align: center;

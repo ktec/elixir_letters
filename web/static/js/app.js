@@ -42,14 +42,40 @@ class App {
     chan.onClose(e => console.log("channel closed", e))
 
     chan.on("join", msg=>{
+
       for (var letter in msg.positions){
         console.log("position received for ", letter)
         let element = $("#" + encodeURI(letter).replace( /(:|\.|\?|\[|\]|,)/g, "\\$1" ));
         element.css('top', msg.positions[letter].top)
         element.css('left', msg.positions[letter].left)
       }
+
       $("#letters-container").show();
-    })
+
+      $("#content").keydown(function (event){
+        console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
+      });
+
+      $("#content").mousemove(function(event) {
+        chan.push("mousemove", {
+          user: $username, body: {
+            id:  $username, x: event.pageX, y: event.pageY
+          }
+        });
+      });
+
+    });
+
+    chan.on("mousemove", msg => {
+      if (msg.user != $username){
+        let id = msg.body.id;
+        let element = $("#" + id);
+        if (!element.length)
+          element = $("<div id=\"" + id +"\" class=\"mouse\">"+id+"</div>").appendTo("#content");
+        element.css('top', msg.body.y - 50);
+        element.css('left', msg.body.x);
+      }
+    });
 
     chan.on("user_count:update", msg => {
       $("#user_count").text(msg.user_count)
