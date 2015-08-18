@@ -44,8 +44,9 @@ class App {
     chan.on("join", msg=>{
       for (var letter in msg.positions){
         console.log("position received for ", letter)
-        $("#" + letter).css('top', msg.positions[letter].top)
-        $("#" + letter).css('left', msg.positions[letter].left)
+        let element = $("#" + encodeURI(letter).replace( /(:|\.|\?|\[|\]|,)/g, "\\$1" ));
+        element.css('top', msg.positions[letter].top)
+        element.css('left', msg.positions[letter].left)
       }
       $("#letters-container").show();
     })
