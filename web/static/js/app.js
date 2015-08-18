@@ -46,8 +46,10 @@ class App {
       for (var letter in msg.positions){
         console.log("position received for ", letter)
         let element = $("#" + encodeURI(letter).replace( /(:|\.|\?|\[|\]|,)/g, "\\$1" ));
-        element.css('top', msg.positions[letter].top)
-        element.css('left', msg.positions[letter].left)
+        if (element.length) {
+          element.css('top', msg.positions[letter].top)
+          element.css('left', msg.positions[letter].left)
+        }
       }
 
       $("#letters-container").show();
