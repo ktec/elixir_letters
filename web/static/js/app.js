@@ -53,7 +53,7 @@ class App {
       $("#letters-container").show();
 
       $("#content").keydown(function (event){
-        console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
+        //console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
       });
 
       $("#content").mousemove(function(event) {
