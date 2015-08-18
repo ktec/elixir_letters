@@ -72,7 +72,7 @@ class App {
     });
 
     chan.on("mousemove", msg => {
-//      if (msg.user != $username){
+      if (msg.user != $username){
         //console.log msg;
         let id = msg.body.id;
         let element = $("#" + id);
@@ -81,7 +81,7 @@ class App {
         element.css('top', msg.body.y - 74);
         element.css('left', msg.body.x - 12);
         element.stop(true,false).fadeIn("fast").delay(2000).fadeOut("slow");
-//      }
+      }
     });
 
     chan.on("user_count:update", msg => {
