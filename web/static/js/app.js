@@ -68,7 +68,7 @@ class App {
           id: e.target.id, left: ui.position.left, top: ui.position.top
         }
       })
-      $(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
+      //$(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
     })
 
     $draggable.on("dragstart", (e, ui) => {
