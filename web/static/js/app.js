@@ -10,7 +10,9 @@ import {Socket} from "phoenix"
 class App {
   static init(){
     let socket = new Socket("/socket", {
-      logger: (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) }
+      logger: (kind, msg, data) => {
+        //console.log(`${kind}: ${msg}`, data)
+      }
     })
 
     function guid() {
@@ -22,6 +24,7 @@ class App {
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
     }
+
 
     socket.connect()
     const $status    = $("#status")
@@ -44,8 +47,8 @@ class App {
     chan.on("join", msg=>{
 
       for (var letter in msg.positions){
-        console.log("position received for ", letter)
-        let element = $("#" + encodeURI(letter).replace( /(:|\.|\?|\!|\[|\]|,)/g, "\\$1" ));
+        //console.log("position received for ", letter)
+        let element = $("#" + this.sanitize_id(letter));
         if (element.length) {
           element.css('top', msg.positions[letter].top)
           element.css('left', msg.positions[letter].left)
@@ -69,14 +72,16 @@ class App {
     });
 
     chan.on("mousemove", msg => {
-      if (msg.user != $username){
+//      if (msg.user != $username){
+        //console.log msg;
         let id = msg.body.id;
         let element = $("#" + id);
         if (!element.length)
           element = $("<div id=\"" + id +"\" class=\"mouse\">"+id+"</div>").appendTo("#content");
-        element.css('top', msg.body.y - 50);
-        element.css('left', msg.body.x);
-      }
+        element.css('top', msg.body.y - 74);
+        element.css('left', msg.body.x - 12);
+        element.stop(true,false).fadeIn("fast").delay(2000).fadeOut("slow");
+//      }
     });
 
     chan.on("user_count:update", msg => {
@@ -85,9 +90,9 @@ class App {
 
     chan.on("new:position", msg => {
       if (msg.user != $username){
-        let letter = $("#" + msg.body.id)
-        letter.css('left', msg.body.left)
-        letter.css('top', msg.body.top)
+        let element = $("#" + this.sanitize_id(msg.body.id));
+        element.css('left', msg.body.left)
+        element.css('top', msg.body.top)
       }
     })
 
@@ -109,6 +114,10 @@ class App {
 
     $draggable.draggable()
 
+  }
+
+  static sanitize_id(id) {
+    return encodeURI(id).replace( /(:|\.|\?|\!|\[|\]|,)/g, "\\$1" );
   }
 
 }
