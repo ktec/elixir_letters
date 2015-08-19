@@ -11,33 +11,22 @@ class App {
   static init(){
     let socket = new Socket("/socket", {
       logger: (kind, msg, data) => {
-        //console.log(`${kind}: ${msg}`, data)
+        console.log(`${kind}: ${msg}`, data)
       }
     })
 
-    function guid() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-    }
-
-
     socket.connect()
+    socket.onClose( e => console.log("CLOSE", e))
+
     const $status    = $("#status")
     const $messages  = $("#messages")
     const $input     = $("#message-input")
-    //const $username  = $("#username")
+    const $username  = $("#username")
     const $draggable = $(".draggable")
+    const $client_id  = this.guid()
+    const $room       = this.get_room()
 
-    let $username = guid();
-
-    socket.onClose( e => console.log("CLOSE", e))
-
-    const chan = socket.chan("rooms:lobby", {userid:$username})
+    const chan = socket.chan("rooms:" + $room, { client_id: $client_id })
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
@@ -48,48 +37,55 @@ class App {
 
       for (var letter in msg.positions){
         //console.log("position received for ", letter)
-        let element = $("#" + this.sanitize_id(letter));
+        let element = $("#" + this.sanitize_id(letter))
         if (element.length) {
-          element.css('top', msg.positions[letter].top)
-          element.css('left', msg.positions[letter].left)
+          element
+            .css('top', msg.positions[letter].top)
+            .css('left', msg.positions[letter].left)
         }
       }
 
-      $("#letters-container").show();
+      $("#letters-container").show()
 
       $("#content").keydown(function (event){
         //console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
-      });
+      })
 
       $("#content").mousemove(function(event) {
         chan.push("mousemove", {
-          user: $username, body: {
-            id:  $username, x: event.pageX, y: event.pageY
+          user: $client_id, body: {
+            id:  $client_id, x: event.pageX, y: event.pageY
           }
-        });
-      });
+        })
+      })
 
-    });
+    })
 
     chan.on("mousemove", msg => {
-      if (msg.user != $username){
-        //console.log msg;
-        let id = msg.body.id;
-        let element = $("#" + id);
+      if (msg.user != $client_id){
+        //console.log msg
+        let id = msg.body.id
+        let element = $("#" + id)
         if (!element.length)
-          element = $("<div id=\"" + id +"\" class=\"mouse\">"+id+"</div>").appendTo("#content");
-        element.css('top', msg.body.y - 74);
-        element.css('left', msg.body.x - 12);
-        element.stop(true,false).fadeIn("fast").delay(2000).fadeOut("slow");
+          element =
+            $("<div id=\"" + id +"\" class=\"mouse\">"+id+"</div>")
+            .appendTo("#content")
+        element
+          .css('top', msg.body.y - 74)
+          .css('left', msg.body.x - 12)
+          .stop(true,false)
+          .fadeIn("fast")
+          .delay(2000)
+          .fadeOut("slow")
       }
-    });
+    })
 
     chan.on("user_count:update", msg => {
       $("#user_count").text(msg.user_count)
     })
 
     chan.on("new:position", msg => {
-      if (msg.user != $username){
+      if (msg.user != $client_id){
         let element = $("#" + this.sanitize_id(msg.body.id));
         element.css('left', msg.body.left)
         element.css('top', msg.body.top)
@@ -98,7 +94,7 @@ class App {
 
     $draggable.on("drag", (e, ui) => {
       chan.push("new:position", {
-        user: $username, body: {
+        user: $client_id, body: {
           id: e.target.id, left: ui.position.left, top: ui.position.top
         }
       })
@@ -109,7 +105,7 @@ class App {
     })
 
     $draggable.on("dragstop", (e, ui) => {
-      chan.push("save_snapshot", {});
+      chan.push("save_snapshot", {})
     })
 
     $draggable.draggable()
@@ -118,6 +114,24 @@ class App {
 
   static sanitize_id(id) {
     return encodeURI(id).replace( /(:|\.|\?|\!|\[|\]|,)/g, "\\$1" );
+  }
+
+  static get_room() {
+    let room = window.location["hash"].replace("#","")
+    if (!room.length) { room = "lobby" }
+    // console.log("room: ", room)
+    return room
+  }
+
+  static guid() {
+    function s4() {
+      return Math.floor((1 + Math
+        .random()) * 0x10000)
+        .toString(16)
+        .substring(1)
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4()
   }
 
 }

@@ -2,6 +2,8 @@ defmodule ElixirLetters.PageController do
   use ElixirLetters.Web, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    letters = %{ "E" => 125, "T" => 92, "A" => 80, "O" => 76, "I" => 72, "N" => 70, "S" => 65, "R" => 61, "H" => 54, "L" => 41, "D" => 39, "C" => 30, "U" => 27, "M" => 25, "F" => 23, "P" => 20, "G" => 19, "W" => 19, "Y" => 17, "B" => 15, "V" => 9, "K" => 6, "X" => 1, "J" => 1, "Q" => 1, "Z" => 1, "e" => 12, "t" => 9, "a" => 8, "o" => 7, "i" => 7, "n" => 7, "s" => 6, "r" => 6, "h" => 5, "l" => 4, "d" => 3, "c" => 3, "u" => 2, "m" => 2, "f" => 2, "p" => 2, "g" => 2, "w" => 2, "y" => 2, "b" => 1, "v" => 9, "k" => 6, "x" => 1, "j" => 1, "q" => 1, "z" => 1, "!" => 5, "?" => 5 }
+    colours = ["#ce1e0c","#466dda","#03c03c","#ff0000","#f6e253"]
+    render(conn, "index.html", letters: letters, colours: colours)
   end
 end

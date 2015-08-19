@@ -27,16 +27,16 @@ defmodule ElixirLetters.RoomChannel do
 
   def terminate(reason, socket) do
     Logger.debug "> leave #{inspect reason}"
-    RoomServer.remove_user(socket.assigns.user_id)
+    RoomServer.remove_user(socket.assigns.client_id)
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
     :ok
   end
 
   def handle_info({:after_join, msg}, socket) do
     Logger.debug "> join #{socket.topic}"
-    %{"userid" => user_id} = msg
-    socket = assign(socket, :user_id, user_id)
-    RoomServer.add_user(user_id,{})
+    %{"client_id" => client_id} = msg
+    socket = assign(socket, :client_id, client_id)
+    RoomServer.add_user(client_id,{})
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
     push socket, "join", %{status: "connected", positions: RoomServer.get_positions}
     {:noreply, socket}
