@@ -13,18 +13,37 @@ defmodule ElixirLetters.RoomServer do
     ]
   end
 
-  def start_link do
+  ### PUBLIC API ###
+
+  @doc """
+  Start the room server and connect to postgres.
+
+  ## Options
+
+    * `:room` - Server room name (default: lobby);
+  """
+  def start_link do #(_opts) do
+    # opts = opts
+    #   |> Keyword.put_new(:room, "lobby")
+    #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
+
     state = %Room{}
     last_snapshot = Snapshot |> Snapshot.last |> Repo.one
     unless is_nil last_snapshot do
       state = %Room{state | positions: last_snapshot.positions}
     end
-<<<<<<< Updated upstream
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
-=======
+
     #GenServer.start_link(ElixirLetters.RoomServer, state, opts)
     GenServer.start_link(__MODULE__, state, opts)
->>>>>>> Stashed changes
+
+    # case GenServer.start_link(__MODULE__, opts) do
+    #   {:ok, pid} ->
+    #       GenServer.cast(pid, :connect)
+    #       {:ok, pid}
+    #   {:error, _} = error ->
+    #     error
+    # end
+
   end
 
   def update_position(user_id, position) do

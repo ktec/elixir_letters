@@ -27,13 +27,7 @@ class App {
     const $room       = this.get_room()
 
     const chan = socket.chan("rooms:" + $room, { client_id: $client_id })
-<<<<<<< Updated upstream
-=======
 
-
-    socket.onClose( e => console.log("CLOSE", e))
-
->>>>>>> Stashed changes
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))

@@ -21,35 +21,28 @@ defmodule ElixirLetters.RoomChannel do
     end
   end
 
-  def join("rooms:" <> _private_subtopic, _message, _socket) do
-    {:error, %{reason: "unauthorized"}}
+  def join("rooms:" <> private_subtopic, payload, socket) do
+    Logger.debug "> room #{inspect private_subtopic}"
+    if authorized?(payload) do
+      Process.flag(:trap_exit, true)
+      send(self, {:after_join, payload})
+      {:ok, socket}
+    else
+      {:error, %{reason: "unauthorized"}}
+    end
   end
 
   def terminate(reason, socket) do
     Logger.debug "> leave #{inspect reason}"
-<<<<<<< Updated upstream
-    RoomServer.remove_user(socket.assigns.client_id)
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
-=======
-    # Logger.debug "> leave #{inspect reason}"
-    # Logger.debug "> leave #{inspect socket}"
+    Logger.debug "> leave #{inspect socket}"
 
     RoomServer.remove_user(socket.assigns[:pid], socket.assigns[:client_id])
 
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
->>>>>>> Stashed changes
     :ok
   end
 
   def handle_info({:after_join, msg}, socket) do
-<<<<<<< Updated upstream
-    Logger.debug "> join #{socket.topic}"
-    %{"client_id" => client_id} = msg
-    socket = assign(socket, :client_id, client_id)
-    RoomServer.add_user(client_id,{})
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
-    push socket, "join", %{status: "connected", positions: RoomServer.get_positions}
-=======
     Logger.debug "> after_join #{inspect socket.assigns}"
     %{"client_id" => client_id} = msg
     socket = assign(socket, :client_id, client_id)
@@ -64,18 +57,7 @@ defmodule ElixirLetters.RoomChannel do
     %{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
     RoomServer.set_position( socket.assigns.pid, payload["body"])
     broadcast! socket, "update:position", payload
->>>>>>> Stashed changes
     {:noreply, socket}
-  end
-
-  def handle_in("new:position", payload, socket) do
-    %{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
-    RoomServer.update_position(
-       payload["user"],
-       payload["body"]
-    )
-    broadcast! socket, "new:position", %{user: payload["user"], body: payload["body"]}
-    {:reply, {:ok, %{position: payload["body"]}}, assign(socket, :user, payload["user"])}
   end
 
   def handle_in("mousemove", payload, socket) do
