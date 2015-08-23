@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :elixir_letters, ElixirLetters.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
+  url: [host: "localhost", port: 80],
   cache_static_manifest: "priv/static/manifest.json"
 
 # ## SSL Support

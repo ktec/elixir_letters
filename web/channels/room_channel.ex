@@ -27,18 +27,44 @@ defmodule ElixirLetters.RoomChannel do
 
   def terminate(reason, socket) do
     Logger.debug "> leave #{inspect reason}"
+<<<<<<< Updated upstream
     RoomServer.remove_user(socket.assigns.client_id)
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
+=======
+    # Logger.debug "> leave #{inspect reason}"
+    # Logger.debug "> leave #{inspect socket}"
+
+    RoomServer.remove_user(socket.assigns[:pid], socket.assigns[:client_id])
+
+    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
+>>>>>>> Stashed changes
     :ok
   end
 
   def handle_info({:after_join, msg}, socket) do
+<<<<<<< Updated upstream
     Logger.debug "> join #{socket.topic}"
     %{"client_id" => client_id} = msg
     socket = assign(socket, :client_id, client_id)
     RoomServer.add_user(client_id,{})
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
     push socket, "join", %{status: "connected", positions: RoomServer.get_positions}
+=======
+    Logger.debug "> after_join #{inspect socket.assigns}"
+    %{"client_id" => client_id} = msg
+    socket = assign(socket, :client_id, client_id)
+    RoomServer.add_user(socket.assigns.pid, client_id, {})
+    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
+    response = %{status: "connected", positions: RoomServer.get_positions(socket.assigns.pid)}
+    push socket, "join", response
+    {:noreply, socket}
+  end
+
+  def handle_in("set:position", payload, socket) do
+    %{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
+    RoomServer.set_position( socket.assigns.pid, payload["body"])
+    broadcast! socket, "update:position", payload
+>>>>>>> Stashed changes
     {:noreply, socket}
   end
 

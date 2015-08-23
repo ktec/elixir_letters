@@ -19,7 +19,12 @@ defmodule ElixirLetters.RoomServer do
     unless is_nil last_snapshot do
       state = %Room{state | positions: last_snapshot.positions}
     end
+<<<<<<< Updated upstream
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
+=======
+    #GenServer.start_link(ElixirLetters.RoomServer, state, opts)
+    GenServer.start_link(__MODULE__, state, opts)
+>>>>>>> Stashed changes
   end
 
   def update_position(user_id, position) do

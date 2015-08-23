@@ -27,6 +27,13 @@ class App {
     const $room       = this.get_room()
 
     const chan = socket.chan("rooms:" + $room, { client_id: $client_id })
+<<<<<<< Updated upstream
+=======
+
+
+    socket.onClose( e => console.log("CLOSE", e))
+
+>>>>>>> Stashed changes
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
@@ -86,9 +93,9 @@ class App {
 
     chan.on("new:position", msg => {
       if (msg.user != $client_id){
-        let element = $("#" + this.sanitize_id(msg.body.id));
-        element.css('left', msg.body.left)
-        element.css('top', msg.body.top)
+        let element = $("#" + this.sanitize_id(msg.body.id))
+          .css('left', msg.body.left)
+          .css('top', msg.body.top)
       }
     })
 

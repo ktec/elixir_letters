@@ -1,6 +1,7 @@
 <div id="letters-container">
-<%= for {letter, count} <- @letters, letter_copy <- 1..count do %>
+<%= for {letter, count} <- @letters, letter_count <- 1..count do %>
+  <% << letter_code :: utf8 >> = letter %>
   <% colour = @colours |> Enum.shuffle |> Enum.take(1) %>
-  <div class="letter draggable letter<%= letter %>" style="color: <%= colour %>" id="<%= letter %><%= letter_copy %>"><%= letter %></div>
+  <div class="letter draggable letter<%= letter %>" style="color: <%= colour %>" id="<%= letter_code %><%= letter_count %>"><%= letter %></div>
 <% end %>
 </div>
