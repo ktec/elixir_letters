@@ -2,6 +2,7 @@ defmodule ElixirLetters.RoomChannel do
   use ElixirLetters.Web, :channel
   #use Phoenix.Channel
   alias ElixirLetters.RoomServer
+  alias ElixirLetters.RoomSupervisor
   require Logger
 
   @doc """
@@ -11,21 +12,19 @@ defmodule ElixirLetters.RoomChannel do
   `:ignore` to deny subscription/broadcast on this channel
   for the requested topic
   """
-  def join("rooms:lobby", payload, socket) do
+  def join("rooms:" <> topic, payload, socket) do
     if authorized?(payload) do
-      Process.flag(:trap_exit, true)
-      send(self, {:after_join, payload})
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
-  end
 
-  def join("rooms:" <> private_subtopic, payload, socket) do
-    Logger.debug "> room #{inspect private_subtopic}"
-    if authorized?(payload) do
+      # Logger.debug "> join"
+      # Logger.debug "> join #{inspect payload}"
+      # Logger.debug "> join"
+
+      pid = RoomSupervisor.start_child(String.to_atom(topic))
+      # Logger.debug "> join #{inspect pid}"
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})
+      socket = assign(socket, :pid, pid)
+      Logger.debug "> join #{inspect socket}"
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -35,9 +34,7 @@ defmodule ElixirLetters.RoomChannel do
   def terminate(reason, socket) do
     Logger.debug "> leave #{inspect reason}"
     Logger.debug "> leave #{inspect socket}"
-
     RoomServer.remove_user(socket.assigns[:pid], socket.assigns[:client_id])
-
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
     :ok
   end
@@ -60,15 +57,14 @@ defmodule ElixirLetters.RoomChannel do
     {:noreply, socket}
   end
 
+  def handle_in("save:snapshot", _payload, socket) do
+    _msg = RoomServer.save_snapshot(socket.assigns.pid)
+    {:noreply, socket}
+  end
+
   def handle_in("mousemove", payload, socket) do
     broadcast! socket, "mousemove", payload
     {:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
-  end
-
-  def handle_in("save_snapshot", _payload, socket) do
-    _msg = RoomServer.save_snapshot()
-    #{:reply, {:ok, msg}, socket}
-    {:reply, :ok, socket}
   end
 
   # Channels can be used in a request/response fashion
@@ -85,7 +81,9 @@ defmodule ElixirLetters.RoomChannel do
     {:noreply, socket}
   end
 
-  # Add authorization logic here as required.
+  @doc """
+  Authorization can go here
+  """
   defp authorized?(_payload) do
     true
   end

@@ -13,20 +13,15 @@ defmodule ElixirLetters.RoomServer do
     ]
   end
 
-  ### PUBLIC API ###
+  # Client
 
   @doc """
-  Start the room server and connect to postgres.
-
-  ## Options
-
-    * `:room` - Server room name (default: lobby);
   """
-  def start_link do #(_opts) do
+  def start_link(state, opts) do
     # opts = opts
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
-
+    Logger.debug "> RoomServer.start_link/2 #{inspect state} #{inspect opts}"
     state = %Room{}
     last_snapshot = Snapshot |> Snapshot.last |> Repo.one
     unless is_nil last_snapshot do
@@ -46,34 +41,54 @@ defmodule ElixirLetters.RoomServer do
 
   end
 
-  def update_position(user_id, position) do
-    GenServer.call(__MODULE__,{:update_position, user_id, position})
+  @doc """
+  Set the position of one character.
+  """
+  def set_position(pid, position) do
+    GenServer.call(pid,{:set_position, position})
   end
 
-  def get_positions() do
-    GenServer.call(__MODULE__, :get_positions)
+  @doc """
+  Get the position of all characters in the room.
+  """
+  def get_positions(pid) do
+    GenServer.call(pid, :get_positions)
   end
 
-  def add_user(user_id, user) do
-    GenServer.call(__MODULE__,{:add_user, user_id, user})
+  @doc """
+  Add a user to the room.
+  """
+  def add_user(pid, user_id, user) do
+    GenServer.call(pid,{:add_user, user_id, user})
   end
 
-  def remove_user(user_id) do
-    GenServer.call(__MODULE__,{:remove_user, user_id})
+  @doc """
+  Remove a user the room.
+  """
+  def remove_user(pid, user_id) do
+    GenServer.call(pid,{:remove_user, user_id})
   end
 
-  def get_user_count() do
-    GenServer.call(__MODULE__, :get_user_count)
+  @doc """
+  Get a count of the number of users in the room.
+  """
+  def get_user_count(pid) do
+    GenServer.call(pid, :get_user_count)
   end
 
-  def save_snapshot() do
-    GenServer.call(__MODULE__, :save_snapshot)
+  @doc """
+  Save a snapshot of the current state of the room.
+  """
+  def save_snapshot(pid) do
+    GenServer.call(pid, :save_snapshot)
   end
+
+  # Server (callbacks)
 
   def handle_call(
-      {:update_position, _user_id, %{"id" => letter_id} = position},
-      _from,
-      %Room{positions: positions} = state) do
+      {:set_position, %{"id" => letter_id} = position},
+      _from,state) do
+    %Room{positions: positions} = state
     positions = Map.put(positions, letter_id, position)
     {:reply, :ok, %Room{state | positions: positions}}
   end

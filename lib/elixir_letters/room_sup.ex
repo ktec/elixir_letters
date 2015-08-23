@@ -8,10 +8,10 @@ defmodule ElixirLetters.RoomSupervisor do
     {:ok, pid} = Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  # def start_link(room_name) do
-  #   Logger.debug "> RoomSupervisor.start_link/1 #{inspect room_name}"
-  #   {:ok, pid} = Supervisor.start_link(__MODULE__, [room_name], name: __MODULE__)
-  # end
+  def start_link(room_name) do
+    Logger.debug "> RoomSupervisor.start_link/1 #{inspect room_name}"
+    {:ok, pid} = Supervisor.start_link(__MODULE__, [room_name], name: __MODULE__)
+  end
 
 	def init([]) do
     Logger.debug "> RoomSupervisor.init"
@@ -30,7 +30,7 @@ defmodule ElixirLetters.RoomSupervisor do
     #Logger.debug "> children #{inspect children}"
     case Supervisor.start_child(__MODULE__, [[],[room: room_name]]) do
       {:ok, pid} -> pid
-#      {:error, {:already_started, pid}} -> pid
+      {:error, {:already_started, pid}} -> pid
 #      res -> res
     end
   end
