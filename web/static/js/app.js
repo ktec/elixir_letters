@@ -27,6 +27,7 @@ class App {
     const $room       = this.get_room()
 
     const chan = socket.chan("rooms:" + $room, { client_id: $client_id })
+
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
                .after(10000, () => console.log("Connection interruption"))
@@ -84,16 +85,16 @@ class App {
       $("#user_count").text(msg.user_count)
     })
 
-    chan.on("new:position", msg => {
+    chan.on("update:position", msg => {
       if (msg.user != $client_id){
-        let element = $("#" + this.sanitize_id(msg.body.id));
-        element.css('left', msg.body.left)
-        element.css('top', msg.body.top)
+        let element = $("#" + this.sanitize_id(msg.body.id))
+          .css('left', msg.body.left)
+          .css('top', msg.body.top)
       }
     })
 
     $draggable.on("drag", (e, ui) => {
-      chan.push("new:position", {
+      chan.push("set:position", {
         user: $client_id, body: {
           id: e.target.id, left: ui.position.left, top: ui.position.top
         }
@@ -105,7 +106,7 @@ class App {
     })
 
     $draggable.on("dragstop", (e, ui) => {
-      chan.push("save_snapshot", {})
+      chan.push("save:snapshot", {})
     })
 
     $draggable.draggable()

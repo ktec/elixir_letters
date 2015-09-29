@@ -2,65 +2,69 @@ defmodule ElixirLetters.RoomChannel do
   use ElixirLetters.Web, :channel
   #use Phoenix.Channel
   alias ElixirLetters.RoomServer
+  alias ElixirLetters.RoomSupervisor
   require Logger
 
   @doc """
   Authorize socket to subscribe and broadcast events on this channel & topic
   Possible Return Values
   `{:ok, socket}` to authorize subscription for channel for requested topic
-  `:ignore` to deny subscription/broadcast on this channel
+  `:ignore` to deny subscription/broadcast on this channeli
   for the requested topic
   """
-  def join("rooms:lobby", payload, socket) do
+  def join("rooms:" <> topic, payload, socket) do
     if authorized?(payload) do
+
+      # Logger.debug "> join"
+      # Logger.debug "> join #{inspect payload}"
+      # Logger.debug "> join"
+
+      pid = RoomSupervisor.start_room_server(String.to_atom(topic))
+      # Logger.debug "> join #{inspect pid}"
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})
+      socket = assign(socket, :pid, pid)
+      Logger.debug "> join #{inspect socket}"
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  def join("rooms:" <> _private_subtopic, _message, _socket) do
-    {:error, %{reason: "unauthorized"}}
-  end
-
   def terminate(reason, socket) do
     Logger.debug "> leave #{inspect reason}"
-    RoomServer.remove_user(socket.assigns.client_id)
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
+    Logger.debug "> leave #{inspect socket}"
+    RoomServer.remove_user(socket.assigns[:pid], socket.assigns[:client_id])
+    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
     :ok
   end
 
   def handle_info({:after_join, msg}, socket) do
-    Logger.debug "> join #{socket.topic}"
+    Logger.debug "> after_join #{inspect socket.assigns}"
     %{"client_id" => client_id} = msg
     socket = assign(socket, :client_id, client_id)
-    RoomServer.add_user(client_id,{})
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count}
-    push socket, "join", %{status: "connected", positions: RoomServer.get_positions}
+    RoomServer.add_user(socket.assigns.pid, client_id, {})
+    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
+    response = %{status: "connected", positions: RoomServer.get_positions(socket.assigns.pid)}
+    push socket, "join", response
     {:noreply, socket}
   end
 
-  def handle_in("new:position", payload, socket) do
+  def handle_in("set:position", payload, socket) do
     %{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
-    RoomServer.update_position(
-       payload["user"],
-       payload["body"]
-    )
-    broadcast! socket, "new:position", %{user: payload["user"], body: payload["body"]}
-    {:reply, {:ok, %{position: payload["body"]}}, assign(socket, :user, payload["user"])}
+    RoomServer.set_position( socket.assigns.pid, payload["body"])
+    broadcast! socket, "update:position", payload
+    {:noreply, socket}
+  end
+
+  def handle_in("save:snapshot", _payload, socket) do
+    _msg = RoomServer.save_snapshot(socket.assigns.pid)
+    {:noreply, socket}
   end
 
   def handle_in("mousemove", payload, socket) do
     broadcast! socket, "mousemove", payload
     {:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
-  end
-
-  def handle_in("save_snapshot", _payload, socket) do
-    _msg = RoomServer.save_snapshot()
-    #{:reply, {:ok, msg}, socket}
-    {:reply, :ok, socket}
   end
 
   # Channels can be used in a request/response fashion
@@ -77,7 +81,9 @@ defmodule ElixirLetters.RoomChannel do
     {:noreply, socket}
   end
 
-  # Add authorization logic here as required.
+  @doc """
+  Authorization can go here
+  """
   defp authorized?(_payload) do
     true
   end

@@ -121,18 +121,18 @@ div#content {
   float:left;
   text-align: center;
   vertical-align: middle;
-  line-height: 40px;
+  line-height: 30px;
   cursor:move;
   user-select: none;
-  width: 40px; height: 40px;
+  width: 30px; height: 30px;
   font-family: 'alphafridgemagnets_regular';
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
-  text-shadow: 0 1px 0 #ccc,
-    0 2px 0 #c9c9c9,
-    0 3px 0 #bbb,
-    0 4px 0 #b9b9b9,
-    0 5px 0 #aaa,
+  text-shadow: 1px 1px 0 #ccc,
+    2px 2px 0 #090909,
+    3px 3px 0 #111,
+    0 4px 0 #191919,
+    0 5px 0 #121927,
     0 6px 1px rgba(0,0,0,.1),
     0 0 5px rgba(0,0,0,.1),
     0 1px 3px rgba(0,0,0,.3),
