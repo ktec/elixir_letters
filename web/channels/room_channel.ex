@@ -9,7 +9,7 @@ defmodule ElixirLetters.RoomChannel do
   Authorize socket to subscribe and broadcast events on this channel & topic
   Possible Return Values
   `{:ok, socket}` to authorize subscription for channel for requested topic
-  `:ignore` to deny subscription/broadcast on this channel
+  `:ignore` to deny subscription/broadcast on this channeli
   for the requested topic
   """
   def join("rooms:" <> topic, payload, socket) do
@@ -19,7 +19,7 @@ defmodule ElixirLetters.RoomChannel do
       # Logger.debug "> join #{inspect payload}"
       # Logger.debug "> join"
 
-      pid = RoomSupervisor.start_child(String.to_atom(topic))
+      pid = RoomSupervisor.start_room_server(String.to_atom(topic))
       # Logger.debug "> join #{inspect pid}"
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})

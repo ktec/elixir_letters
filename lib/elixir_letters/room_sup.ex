@@ -5,34 +5,41 @@ defmodule ElixirLetters.RoomSupervisor do
 
   def start_link do
     Logger.debug "> RoomSupervisor.start_link/0"
-    {:ok, pid} = Supervisor.start_link(__MODULE__, [], name: __MODULE__)
+    #{:ok, pid} =
+    Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def start_link(room_name) do
-    Logger.debug "> RoomSupervisor.start_link/1 #{inspect room_name}"
-    {:ok, pid} = Supervisor.start_link(__MODULE__, [room_name], name: __MODULE__)
-  end
+  # def start_link(room_name) do
+  #   Logger.debug "> RoomSupervisor.start_link/1 #{inspect room_name}"
+  #   {:ok, pid} = Supervisor.start_link(__MODULE__, [room_name], name: __MODULE__)
+  # end
 
-	def init([]) do
+  @manager_name ElixirLetters.EventManager
+  @registry_name ElixirLetters.Registry
+
+  def init([]) do
     Logger.debug "> RoomSupervisor.init"
-		children = [
-      worker(RoomServer, [])
+    children = [
+      # worker(GenEvent, [[name: @manager_name]]),
+      # worker(ElixirLetters.Registry, [@manager_name, [name: @registry_name]])
+      worker(RoomServer, [], restart: :transient)
     ]
-    supervise(children,strategy: :simple_one_for_one)
+
+    supervise(children, strategy: :simple_one_for_one)
 	end
 
   @doc """
   Creates a new child process for the given `room_name`.
   """
-  def start_child(room_name) do
+  def start_room_server(room_name) do
     Logger.debug "> start_child #{inspect room_name}"
     #children = Supervisor.which_children(ElixirLetters.RoomSupervisor)
     #Logger.debug "> children #{inspect children}"
-    case Supervisor.start_child(__MODULE__, [[],[room: room_name]]) do
-      {:ok, pid} -> pid
-      {:error, {:already_started, pid}} -> pid
-#      res -> res
-    end
+    case Supervisor.start_child(__MODULE__, [[],[name: room_name]]) do
+        {:ok, pid} -> pid
+        {:error, {:already_started, pid}} -> pid
+  #      res -> res
+      end
   end
 
   # def start_workers(pid) do
