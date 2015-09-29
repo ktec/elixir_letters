@@ -2,12 +2,13 @@ defmodule ElixirLetters.Snapshot do
   use ElixirLetters.Web, :model
 
   schema "snapshots" do
+    field :room_name, :string
     field :positions, :map
 
     timestamps
   end
 
-  @required_fields ~w(positions)
+  @required_fields ~w(room_name positions)
   @optional_fields ~w()
 
   @doc """
@@ -26,5 +27,5 @@ defmodule ElixirLetters.Snapshot do
     order_by: [desc: p.id],
     limit: 1
   end
-  
+
 end
