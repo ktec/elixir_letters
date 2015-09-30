@@ -7,6 +7,7 @@ defmodule ElixirLetters.RoomServer do
 
   defmodule Room do
     defstruct [
+      room_name: "lobby",
       positions: %{},
       users: %{},
       user_count: 0
@@ -112,7 +113,10 @@ defmodule ElixirLetters.RoomServer do
   end
 
   def handle_call(:save_snapshot, _from, state) do
-    changeset = Snapshot.changeset %Snapshot{}, %{positions: state.positions}
+    changeset = Snapshot.changeset(%Snapshot{},
+      %{room_name: state.room_name,
+        positions: state.positions
+      })
 
     if changeset.valid? do
       _msg = Repo.insert!(changeset)
