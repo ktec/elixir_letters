@@ -38,12 +38,9 @@ class App {
 
       for (var letter in msg.positions){
         //console.log("position received for ", letter)
-        let element = $("#" + this.sanitize_id(letter))
-        if (element.length) {
-          element
-            .css('top', msg.positions[letter].top)
-            .css('left', msg.positions[letter].left)
-        }
+        this.move_letter(
+          letter,
+          msg.positions[letter])
       }
 
       $("#letters-container").show()
@@ -53,27 +50,23 @@ class App {
       })
 
       $("#content").mousemove(function(event) {
-        chan.push("mousemove", {
-          user: $client_id, body: {
-            id:  $client_id, x: event.pageX, y: event.pageY
+        chan.push("mousemove",
+          {
+            client_id: $client_id,
+            x: event.pageX, y: event.pageY
           }
-        })
+        )
       })
 
     })
 
     chan.on("mousemove", msg => {
-      if (msg.user != $client_id){
+      if (msg.client_id != $client_id){
         //console.log msg
-        let id = msg.body.id
-        let element = $("#" + id)
-        if (!element.length)
-          element =
-            $("<div id=\"" + id +"\" class=\"mouse\"></div>")
-            .appendTo("#content")
+        let element = this.find_or_create_cursor(msg.client_id)
         element
-          .css('top', msg.body.y - 74)
-          .css('left', msg.body.x - 12)
+          .css('top', msg.y - 74)
+          .css('left', msg.x - 12)
           .stop(true,false)
           .fadeIn("fast")
           .delay(2000)
@@ -87,9 +80,7 @@ class App {
 
     chan.on("update:position", msg => {
       if (msg.user != $client_id){
-        let element = $("#" + this.sanitize_id(msg.body.id))
-          .css('left', msg.body.left)
-          .css('top', msg.body.top)
+        this.move_letter(msg.body.id, msg.body)
       }
     })
 
@@ -133,6 +124,24 @@ class App {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4()
+  }
+
+  static find_or_create_cursor(id) {
+    let element = $("#" + id)
+    if (!element.length)
+      element =
+        $("<div id=\"" + id +"\" class=\"mouse\"></div>")
+        .appendTo("#content")
+    return element
+  }
+
+  static move_letter(id, pos) {
+    let element = $("#" + this.sanitize_id(id))
+    if (element.length) {
+      element
+        .css('top', pos.top)
+        .css('left', pos.left)
+    }
   }
 
 }

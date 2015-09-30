@@ -5253,13 +5253,13 @@ div#content {
   float: left;
   text-align: center;
   vertical-align: middle;
-  line-height: 30px;
+  line-height: 50px;
   cursor: move;
   user-select: none;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   font-family: 'alphafridgemagnets_regular';
-  font-size: 30px;
+  font-size: 50px;
   font-weight: bold;
   text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #090909, 3px 3px 0 #111, 0 4px 0 #191919, 0 5px 0 #121927, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
 

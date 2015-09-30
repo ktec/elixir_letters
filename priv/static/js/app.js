@@ -178,10 +178,7 @@ var App = (function () {
 
         for (var letter in msg.positions) {
           //console.log("position received for ", letter)
-          var element = $("#" + _this.sanitize_id(letter));
-          if (element.length) {
-            element.css('top', msg.positions[letter].top).css('left', msg.positions[letter].left);
-          }
+          _this.move_letter(letter, msg.positions[letter]);
         }
 
         $("#letters-container").show();
@@ -192,20 +189,17 @@ var App = (function () {
 
         $("#content").mousemove(function (event) {
           chan.push("mousemove", {
-            user: $client_id, body: {
-              id: $client_id, x: event.pageX, y: event.pageY
-            }
+            client_id: $client_id,
+            x: event.pageX, y: event.pageY
           });
         });
       });
 
       chan.on("mousemove", function (msg) {
-        if (msg.user != $client_id) {
+        if (msg.client_id != $client_id) {
           //console.log msg
-          var id = msg.body.id;
-          var element = $("#" + id);
-          if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"></div>").appendTo("#content");
-          element.css('top', msg.body.y - 74).css('left', msg.body.x - 12).stop(true, false).fadeIn("fast").delay(2000).fadeOut("slow");
+          var element = _this.find_or_create_cursor(msg.client_id);
+          element.css('top', msg.y - 74).css('left', msg.x - 12).stop(true, false).fadeIn("fast").delay(2000).fadeOut("slow");
         }
       });
 
@@ -215,7 +209,7 @@ var App = (function () {
 
       chan.on("update:position", function (msg) {
         if (msg.user != $client_id) {
-          var element = $("#" + _this.sanitize_id(msg.body.id)).css('left', msg.body.left).css('top', msg.body.top);
+          _this.move_letter(msg.body.id, msg.body);
         }
       });
 
@@ -258,6 +252,21 @@ var App = (function () {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
       }
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+  }, {
+    key: "find_or_create_cursor",
+    value: function find_or_create_cursor(id) {
+      var element = $("#" + id);
+      if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"></div>").appendTo("#content");
+      return element;
+    }
+  }, {
+    key: "move_letter",
+    value: function move_letter(id, pos) {
+      var element = $("#" + this.sanitize_id(id));
+      if (element.length) {
+        element.css('top', pos.top).css('left', pos.left);
+      }
     }
   }]);
 
