@@ -204,7 +204,7 @@ var App = (function () {
           //console.log msg
           var id = msg.body.id;
           var element = $("#" + id);
-          if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\">" + id + "</div>").appendTo("#content");
+          if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"></div>").appendTo("#content");
           element.css('top', msg.body.y - 74).css('left', msg.body.x - 12).stop(true, false).fadeIn("fast").delay(2000).fadeOut("slow");
         }
       });

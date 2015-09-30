@@ -69,7 +69,7 @@ class App {
         let element = $("#" + id)
         if (!element.length)
           element =
-            $("<div id=\"" + id +"\" class=\"mouse\">"+id+"</div>")
+            $("<div id=\"" + id +"\" class=\"mouse\"></div>")
             .appendTo("#content")
         element
           .css('top', msg.body.y - 74)
