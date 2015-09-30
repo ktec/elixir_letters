@@ -18,6 +18,7 @@ defmodule ElixirLetters.RoomChannel do
       # Logger.debug "> join"
       # Logger.debug "> join #{inspect payload}"
       # Logger.debug "> join"
+      topic = String.slice(topic, 0, 100)
 
       pid = RoomSupervisor.start_room_server(String.to_atom(topic))
       # Logger.debug "> join #{inspect pid}"
