@@ -51,8 +51,8 @@ defmodule ElixirLetters.RoomChannel do
   end
 
   def handle_in("set:position", payload, socket) do
-    %{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
-    RoomServer.set_position( socket.assigns.pid, payload["body"])
+    #%{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
+    RoomServer.set_position(socket.assigns.pid, payload["body"])
     broadcast! socket, "update:position", payload
     {:noreply, socket}
   end
@@ -64,7 +64,9 @@ defmodule ElixirLetters.RoomChannel do
 
   def handle_in("mousemove", payload, socket) do
     broadcast! socket, "mousemove", payload
-    {:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
+    # Do we really need to reply?
+    #{:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
+    {:noreply, socket}
   end
 
   # Channels can be used in a request/response fashion

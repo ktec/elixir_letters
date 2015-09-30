@@ -23,13 +23,22 @@ defmodule ElixirLetters.RoomServer do
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
     Logger.debug "> RoomServer.start_link/2 #{inspect state} #{inspect opts}"
-    state = %Room{}
-    last_snapshot = Snapshot |> Snapshot.last |> Repo.one
+    room_name = Atom.to_string(opts[:name])
+
+    state = %Room{room_name: room_name}
+
+    query = from s in Snapshot,
+            where: s.room_name == ^room_name
+    last_snapshot = query |> Snapshot.last |> Repo.one
+
+    Logger.debug "> SNAPSHOT: #{inspect last_snapshot}"
+
     unless is_nil last_snapshot do
       state = %Room{state | positions: last_snapshot.positions}
     end
 
-    #GenServer.start_link(ElixirLetters.RoomServer, state, opts)
+    Logger.debug "> STATE: #{inspect state}"
+
     GenServer.start_link(__MODULE__, state, opts)
 
     # case GenServer.start_link(__MODULE__, opts) do
