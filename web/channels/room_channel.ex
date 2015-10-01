@@ -40,14 +40,12 @@ defmodule ElixirLetters.RoomChannel do
     :ok
   end
 
-  def handle_info({:after_join, msg}, socket) do
+  def handle_info({:after_join, %{"client_id" => client_id}}, socket) do
     Logger.debug "> after_join #{inspect socket.assigns}"
-    %{"client_id" => client_id} = msg
     socket = assign(socket, :client_id, client_id)
     RoomServer.add_user(socket.assigns.pid, client_id, {})
     broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
-    response = %{status: "connected", positions: RoomServer.get_positions(socket.assigns.pid)}
-    push socket, "join", response
+    push socket, "join", %{status: "connected", positions: RoomServer.get_positions(socket.assigns.pid)}
     {:noreply, socket}
   end
 
