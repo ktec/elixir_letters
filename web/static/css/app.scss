@@ -154,9 +154,18 @@ div#content {
     0 20px 20px rgba(0,0,0,.15);
 }
 
-.letter-33 { top: 0px; left: 50px; }
-.letter-63 { top: 50px; left: 50px; }
 
-@for $i from 65 through 200 {
-  .letter-#{$i} { top: #{50 * ($i % 32)}px;  left: #{floor($i / 32) * 50}px; }
+@for $i from 65 through 90 {
+  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 0px; }
 }
+
+@for $i from 97 through 122 {
+  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 50px; }
+}
+
+@for $i from 48 through 57 {
+  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 100px; }
+}
+
+.letter-33 { top: 100px; left: 100px; }
+.letter-63 { top: 150px; left: 100px; }
