@@ -43,7 +43,7 @@ form.link, form.button {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 760px;
   }
 }
 .container-narrow > hr {
@@ -115,10 +115,13 @@ div#content {
   width: 32px;
   height: 42px;
   position: relative;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .letter {
   float:left;
+  position: absolute;
   text-align: center;
   vertical-align: middle;
   line-height: 50px;
@@ -142,5 +145,9 @@ div#content {
     0 20px 20px rgba(0,0,0,.15);
 }
 
-// .user-count {
-// }
+.letter-33 { top: 0px; left: 50px; }
+.letter-63 { top: 50px; left: 50px; }
+
+@for $i from 65 through 200 {
+  .letter-#{$i} { top: #{50 * ($i % 32)}px;  left: #{floor($i / 32) * 50}px; }
+}

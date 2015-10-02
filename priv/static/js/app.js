@@ -190,6 +190,7 @@ var App = (function () {
         $("#content").mousemove(function (event) {
           chan.push("mousemove", {
             client_id: $client_id,
+            username: $username.val(),
             x: event.pageX, y: event.pageY
           });
         });
@@ -198,7 +199,7 @@ var App = (function () {
       chan.on("mousemove", function (msg) {
         if (msg.client_id != $client_id) {
           //console.log msg
-          var element = _this.find_or_create_cursor(msg.client_id);
+          var element = _this.find_or_create_cursor(msg.client_id, msg.username);
           element.css('top', msg.y - 74).css('left', msg.x - 12).stop(true, false).fadeIn("fast").delay(2000).fadeOut("slow");
         }
       });
@@ -216,7 +217,9 @@ var App = (function () {
       $draggable.on("drag", function (e, ui) {
         chan.push("set:position", {
           user: $client_id, body: {
-            id: e.target.id, left: ui.position.left, top: ui.position.top
+            id: e.target.id,
+            left: ui.position.left,
+            top: ui.position.top
           }
         });
         //$(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
@@ -255,9 +258,10 @@ var App = (function () {
     }
   }, {
     key: "find_or_create_cursor",
-    value: function find_or_create_cursor(id) {
+    value: function find_or_create_cursor(id, username) {
       var element = $("#" + id);
       if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"></div>").appendTo("#content");
+      element.text(username);
       return element;
     }
   }, {

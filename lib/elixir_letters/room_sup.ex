@@ -22,7 +22,8 @@ defmodule ElixirLetters.RoomSupervisor do
     children = [
       # worker(GenEvent, [[name: @manager_name]]),
       # worker(ElixirLetters.Registry, [@manager_name, [name: @registry_name]])
-      worker(RoomServer, [], restart: :transient)
+      #worker(RoomServer, [], restart: :transient) # <!-- this would restart if dies unintentionally
+      worker(RoomServer, [], restart: :temporary) # <!-- this would restart if ... dont know
     ]
 
     supervise(children, strategy: :simple_one_for_one)
@@ -31,7 +32,7 @@ defmodule ElixirLetters.RoomSupervisor do
   @doc """
   Creates a new child process for the given `room_name`.
   """
-  def start_room_server(room_name) do
+  def start_room(room_name) do
     Logger.debug "> start_child #{inspect room_name}"
     #children = Supervisor.which_children(ElixirLetters.RoomSupervisor)
     #Logger.debug "> children #{inspect children}"

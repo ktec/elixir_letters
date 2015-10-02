@@ -22,10 +22,10 @@ defmodule ElixirLetters.RoomServer do
     # opts = opts
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
-    Logger.debug "> RoomServer.start_link/2 #{inspect state} #{inspect opts}"
     room_name = Atom.to_string(opts[:name])
 
     state = %Room{room_name: room_name}
+    Logger.debug "> RoomServer.start_link/1 #{inspect state} #{inspect opts}"
 
     query = from s in Snapshot,
             where: s.room_name == ^room_name

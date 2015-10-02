@@ -20,7 +20,7 @@ defmodule ElixirLetters.RoomChannel do
       # Logger.debug "> join"
       topic = String.slice(topic, 0, 100)
 
-      pid = RoomSupervisor.start_room_server(String.to_atom(topic))
+      pid = RoomSupervisor.start_room(String.to_atom(topic))
       # Logger.debug "> join #{inspect pid}"
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})

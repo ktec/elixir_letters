@@ -26,7 +26,9 @@ class App {
     const $client_id  = this.guid()
     const $room       = this.get_room()
 
-    const chan = socket.chan("rooms:" + $room, { client_id: $client_id })
+    const chan = socket.chan("rooms:" + $room,
+      { client_id: $client_id }
+    )
 
     chan.join().receive("ignore", () => console.log("auth error"))
                .receive("ok", () => console.log("join ok"))
@@ -53,6 +55,7 @@ class App {
         chan.push("mousemove",
           {
             client_id: $client_id,
+            username: $username.val(),
             x: event.pageX, y: event.pageY
           }
         )
@@ -63,7 +66,7 @@ class App {
     chan.on("mousemove", msg => {
       if (msg.client_id != $client_id){
         //console.log msg
-        let element = this.find_or_create_cursor(msg.client_id)
+        let element = this.find_or_create_cursor(msg.client_id, msg.username)
         element
           .css('top', msg.y - 74)
           .css('left', msg.x - 12)
@@ -87,7 +90,9 @@ class App {
     $draggable.on("drag", (e, ui) => {
       chan.push("set:position", {
         user: $client_id, body: {
-          id: e.target.id, left: ui.position.left, top: ui.position.top
+          id: e.target.id,
+          left: ui.position.left,
+          top: ui.position.top
         }
       })
       //$(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
@@ -126,12 +131,13 @@ class App {
       s4() + '-' + s4() + s4() + s4()
   }
 
-  static find_or_create_cursor(id) {
+  static find_or_create_cursor(id, username) {
     let element = $("#" + id)
     if (!element.length)
       element =
         $("<div id=\"" + id +"\" class=\"mouse\"></div>")
         .appendTo("#content")
+    element.text(username)
     return element
   }
 
