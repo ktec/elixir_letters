@@ -5172,46 +5172,55 @@ form.link, form.button {
   background-image: url("/images/phoenix.png");
   background-size: 519px 71px; }
 
+/* line 36, stdin */
+.made-with {
+  width: 92px;
+  height: 20px;
+  display: inline-block;
+  margin-bottom: 1em;
+  background-image: url("/images/elixir.svg");
+  background-size: 92px 20px; }
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 38, stdin */
+/* line 47, stdin */
 .header, .marketing {
   padding-right: 15px;
   padding-left: 15px; }
 
 /* Customize container */
 @media (min-width: 768px) {
-  /* line 45, stdin */
+  /* line 54, stdin */
   .container {
     max-width: 760px; } }
 
-/* line 49, stdin */
+/* line 58, stdin */
 .container-narrow > hr {
   margin: 30px 0; }
 
 /* Main marketing message */
-/* line 54, stdin */
+/* line 63, stdin */
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5; }
 
 /* Supporting marketing content */
-/* line 60, stdin */
+/* line 69, stdin */
 .marketing {
   margin: 35px 0; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  /* line 68, stdin */
+  /* line 77, stdin */
   .header, .marketing {
     padding-right: 0;
     padding-left: 0; }
   /* Space out the masthead */
-  /* line 73, stdin */
+  /* line 82, stdin */
   .header {
     margin-bottom: 30px; }
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 77, stdin */
+  /* line 86, stdin */
   .jumbotron {
     border-bottom: 0; } }
 
@@ -5222,7 +5231,7 @@ form.link, form.button {
   font-weight: normal;
   font-style: normal; }
 
-/* line 94, stdin */
+/* line 103, stdin */
 div#content {
   background: url(/images/samsung.jpg) no-repeat scroll center top transparent;
   position: relative;
@@ -5232,16 +5241,16 @@ div#content {
   height: 2000px;
   width: 2000px; }
 
-/* line 104, stdin */
+/* line 113, stdin */
 #letters-container {
   position: relative;
   display: none; }
 
-/* line 109, stdin */
+/* line 118, stdin */
 .letter::selection {
   background: transparent; }
 
-/* line 113, stdin */
+/* line 122, stdin */
 .mouse {
   background: url(/images/cursor.png) no-repeat scroll center top transparent;
   width: 32px;
@@ -5250,7 +5259,7 @@ div#content {
   font-size: 18px;
   font-weight: bold; }
 
-/* line 122, stdin */
+/* line 131, stdin */
 .letter {
   float: left;
   position: absolute;
@@ -5266,692 +5275,692 @@ div#content {
   font-weight: bold;
   text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #090909, 3px 3px 0 #111, 0 4px 0 #191919, 0 5px 0 #121927, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
-/* line 148, stdin */
+/* line 157, stdin */
 .letter-33 {
   top: 0px;
   left: 50px; }
 
-/* line 149, stdin */
+/* line 158, stdin */
 .letter-63 {
   top: 50px;
   left: 50px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-65 {
   top: 50px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-66 {
   top: 100px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-67 {
   top: 150px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-68 {
   top: 200px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-69 {
   top: 250px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-70 {
   top: 300px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-71 {
   top: 350px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-72 {
   top: 400px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-73 {
   top: 450px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-74 {
   top: 500px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-75 {
   top: 550px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-76 {
   top: 600px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-77 {
   top: 650px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-78 {
   top: 700px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-79 {
   top: 750px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-80 {
   top: 800px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-81 {
   top: 850px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-82 {
   top: 900px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-83 {
   top: 950px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-84 {
   top: 1000px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-85 {
   top: 1050px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-86 {
   top: 1100px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-87 {
   top: 1150px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-88 {
   top: 1200px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-89 {
   top: 1250px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-90 {
   top: 1300px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-91 {
   top: 1350px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-92 {
   top: 1400px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-93 {
   top: 1450px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-94 {
   top: 1500px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-95 {
   top: 1550px;
   left: 100px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-96 {
   top: 0px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-97 {
   top: 50px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-98 {
   top: 100px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-99 {
   top: 150px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-100 {
   top: 200px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-101 {
   top: 250px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-102 {
   top: 300px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-103 {
   top: 350px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-104 {
   top: 400px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-105 {
   top: 450px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-106 {
   top: 500px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-107 {
   top: 550px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-108 {
   top: 600px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-109 {
   top: 650px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-110 {
   top: 700px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-111 {
   top: 750px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-112 {
   top: 800px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-113 {
   top: 850px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-114 {
   top: 900px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-115 {
   top: 950px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-116 {
   top: 1000px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-117 {
   top: 1050px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-118 {
   top: 1100px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-119 {
   top: 1150px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-120 {
   top: 1200px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-121 {
   top: 1250px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-122 {
   top: 1300px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-123 {
   top: 1350px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-124 {
   top: 1400px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-125 {
   top: 1450px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-126 {
   top: 1500px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-127 {
   top: 1550px;
   left: 150px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-128 {
   top: 0px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-129 {
   top: 50px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-130 {
   top: 100px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-131 {
   top: 150px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-132 {
   top: 200px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-133 {
   top: 250px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-134 {
   top: 300px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-135 {
   top: 350px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-136 {
   top: 400px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-137 {
   top: 450px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-138 {
   top: 500px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-139 {
   top: 550px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-140 {
   top: 600px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-141 {
   top: 650px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-142 {
   top: 700px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-143 {
   top: 750px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-144 {
   top: 800px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-145 {
   top: 850px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-146 {
   top: 900px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-147 {
   top: 950px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-148 {
   top: 1000px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-149 {
   top: 1050px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-150 {
   top: 1100px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-151 {
   top: 1150px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-152 {
   top: 1200px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-153 {
   top: 1250px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-154 {
   top: 1300px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-155 {
   top: 1350px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-156 {
   top: 1400px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-157 {
   top: 1450px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-158 {
   top: 1500px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-159 {
   top: 1550px;
   left: 200px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-160 {
   top: 0px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-161 {
   top: 50px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-162 {
   top: 100px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-163 {
   top: 150px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-164 {
   top: 200px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-165 {
   top: 250px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-166 {
   top: 300px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-167 {
   top: 350px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-168 {
   top: 400px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-169 {
   top: 450px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-170 {
   top: 500px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-171 {
   top: 550px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-172 {
   top: 600px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-173 {
   top: 650px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-174 {
   top: 700px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-175 {
   top: 750px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-176 {
   top: 800px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-177 {
   top: 850px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-178 {
   top: 900px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-179 {
   top: 950px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-180 {
   top: 1000px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-181 {
   top: 1050px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-182 {
   top: 1100px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-183 {
   top: 1150px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-184 {
   top: 1200px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-185 {
   top: 1250px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-186 {
   top: 1300px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-187 {
   top: 1350px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-188 {
   top: 1400px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-189 {
   top: 1450px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-190 {
   top: 1500px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-191 {
   top: 1550px;
   left: 250px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-192 {
   top: 0px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-193 {
   top: 50px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-194 {
   top: 100px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-195 {
   top: 150px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-196 {
   top: 200px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-197 {
   top: 250px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-198 {
   top: 300px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-199 {
   top: 350px;
   left: 300px; }
 
-/* line 152, stdin */
+/* line 161, stdin */
 .letter-200 {
   top: 400px;
   left: 300px; }
