@@ -40,6 +40,7 @@ form.link, form.button {
   margin-bottom: 1em;
   background-image: url("/images/elixir.svg");
   background-size: 92px 20px;
+  float: right;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -108,6 +109,10 @@ div#content {
   bottom:0;
   height: 2000px;
   width: 2000px;
+}
+
+#username {
+  margin: 4px;
 }
 
 #letters-container {

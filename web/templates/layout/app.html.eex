@@ -15,6 +15,7 @@
   <body>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <span class="made-with"></span>
       <!--span class="logo"></span-->
       <div class="container">
         <div class="navbar-header">
@@ -30,9 +31,8 @@
           <ul class="nav navbar-nav pull-right">
             <li>
               <a href="https://github.com/ktec/elixir_letters">source</a>
-              <span class="made-with"></span>
             </li>
-            <li><a href="http://github.com/phoenixframework/phoenix">Learn more about the Phoenix Framework</a></li>
+            <li><a href="http://github.com/phoenixframework/phoenix">Learn more about Phoenix</a></li>
             <li><a>Users: <span id="user_count"></span></a></li>
             <li><input class="form-control" id="username" type="text" placeholder="username..." width="12"/></li>
           </ul>
