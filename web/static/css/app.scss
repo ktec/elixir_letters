@@ -120,6 +120,12 @@ div#content {
   display: none;
 }
 
+.mouse p {
+  position: relative;
+  top: 40px;
+  font-size: 18px;
+}
+
 .letter::selection {
   background: transparent;
 }

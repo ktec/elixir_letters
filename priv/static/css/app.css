@@ -5252,10 +5252,16 @@ div#content {
   display: none; }
 
 /* line 123, stdin */
+.mouse p {
+  position: relative;
+  top: 40px;
+  font-size: 18px; }
+
+/* line 129, stdin */
 .letter::selection {
   background: transparent; }
 
-/* line 127, stdin */
+/* line 133, stdin */
 .mouse {
   background: url(/images/cursor.png) no-repeat scroll center top transparent;
   width: 32px;
@@ -5264,7 +5270,7 @@ div#content {
   font-size: 18px;
   font-weight: bold; }
 
-/* line 136, stdin */
+/* line 142, stdin */
 .letter {
   float: left;
   position: absolute;
@@ -5280,322 +5286,322 @@ div#content {
   font-weight: bold;
   text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #090909, 3px 3px 0 #111, 0 4px 0 #191919, 0 5px 0 #121927, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-65 {
   top: 100px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-66 {
   top: 150px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-67 {
   top: 200px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-68 {
   top: 250px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-69 {
   top: 300px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-70 {
   top: 350px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-71 {
   top: 400px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-72 {
   top: 450px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-73 {
   top: 500px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-74 {
   top: 550px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-75 {
   top: 600px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-76 {
   top: 650px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-77 {
   top: 700px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-78 {
   top: 750px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-79 {
   top: 800px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-80 {
   top: 850px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-81 {
   top: 900px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-82 {
   top: 950px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-83 {
   top: 1000px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-84 {
   top: 1050px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-85 {
   top: 1100px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-86 {
   top: 1150px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-87 {
   top: 1200px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-88 {
   top: 1250px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-89 {
   top: 1300px;
   left: 0px; }
 
-/* line 164, stdin */
+/* line 170, stdin */
 .letter-90 {
   top: 1350px;
   left: 0px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-97 {
   top: 100px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-98 {
   top: 150px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-99 {
   top: 200px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-100 {
   top: 250px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-101 {
   top: 300px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-102 {
   top: 350px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-103 {
   top: 400px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-104 {
   top: 450px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-105 {
   top: 500px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-106 {
   top: 550px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-107 {
   top: 600px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-108 {
   top: 650px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-109 {
   top: 700px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-110 {
   top: 750px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-111 {
   top: 800px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-112 {
   top: 850px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-113 {
   top: 900px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-114 {
   top: 950px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-115 {
   top: 1000px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-116 {
   top: 1050px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-117 {
   top: 1100px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-118 {
   top: 1150px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-119 {
   top: 1200px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-120 {
   top: 1250px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-121 {
   top: 1300px;
   left: 50px; }
 
-/* line 168, stdin */
+/* line 174, stdin */
 .letter-122 {
   top: 1350px;
   left: 50px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-48 {
   top: 850px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-49 {
   top: 900px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-50 {
   top: 950px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-51 {
   top: 1000px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-52 {
   top: 1050px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-53 {
   top: 1100px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-54 {
   top: 1150px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-55 {
   top: 1200px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-56 {
   top: 1250px;
   left: 100px; }
 
-/* line 172, stdin */
+/* line 178, stdin */
 .letter-57 {
   top: 1300px;
   left: 100px; }
 
-/* line 175, stdin */
+/* line 181, stdin */
 .letter-33 {
   top: 100px;
   left: 100px; }
 
-/* line 176, stdin */
+/* line 182, stdin */
 .letter-63 {
   top: 150px;
   left: 100px; }

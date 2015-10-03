@@ -135,9 +135,9 @@ class App {
     let element = $("#" + id)
     if (!element.length)
       element =
-        $("<div id=\"" + id +"\" class=\"mouse\"></div>")
+        $("<div id=\"" + id +"\" class=\"mouse\"><p class=\"name\"></p></div>")
         .appendTo("#content")
-    element.text(username)
+    element.find( ".name" ).text(username)
     return element
   }
 

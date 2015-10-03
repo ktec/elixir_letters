@@ -260,8 +260,8 @@ var App = (function () {
     key: "find_or_create_cursor",
     value: function find_or_create_cursor(id, username) {
       var element = $("#" + id);
-      if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"></div>").appendTo("#content");
-      element.text(username);
+      if (!element.length) element = $("<div id=\"" + id + "\" class=\"mouse\"><p class=\"name\"></p></div>").appendTo("#content");
+      element.find(".name").text(username);
       return element;
     }
   }, {
