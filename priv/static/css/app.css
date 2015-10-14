@@ -5232,16 +5232,6 @@ form.link, form.button {
   font-weight: normal;
   font-style: normal; }
 
-/* line 104, stdin */
-div#content {
-  background: url(/images/samsung.jpg) no-repeat scroll center top transparent;
-  position: relative;
-  margin: 0 auto;
-  top: 50px;
-  bottom: 0;
-  height: 2000px;
-  width: 2000px; }
-
 /* line 114, stdin */
 #username {
   margin: 4px; }
