@@ -17,13 +17,13 @@ defmodule ElixirLetters.RoomServer do
   # Client
 
   @doc """
+  Starts the process
   """
   def start_link(state, opts) do
     # opts = opts
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
     room_name = Atom.to_string(opts[:name])
-
     state = %Room{room_name: room_name}
     Logger.debug "> RoomServer.start_link/1 #{inspect state} #{inspect opts}"
 
@@ -31,24 +31,14 @@ defmodule ElixirLetters.RoomServer do
             where: s.room_name == ^room_name
     last_snapshot = query |> Snapshot.last |> Repo.one
 
-    Logger.debug "> SNAPSHOT: #{inspect last_snapshot}"
-
     unless is_nil last_snapshot do
       state = %Room{state | positions: last_snapshot.positions}
     end
 
+    # GenServer.call(__MODULE__, :initialize_room, room_name)
+
     Logger.debug "> STATE: #{inspect state}"
-
     GenServer.start_link(__MODULE__, state, opts)
-
-    # case GenServer.start_link(__MODULE__, opts) do
-    #   {:ok, pid} ->
-    #       GenServer.cast(pid, :connect)
-    #       {:ok, pid}
-    #   {:error, _} = error ->
-    #     error
-    # end
-
   end
 
   @doc """
@@ -129,7 +119,6 @@ defmodule ElixirLetters.RoomServer do
 
     if changeset.valid? do
       _msg = Repo.insert!(changeset)
-
       #{:reply, {:ok, msg}, state}
       {:reply, :ok, state}
     else
@@ -137,5 +126,17 @@ defmodule ElixirLetters.RoomServer do
     end
 
   end
+
+  # def handle_call({:initialize_room, room_name}, _from, state) do
+  #   query = from s in Snapshot,
+  #           where: s.room_name == ^room_name
+  #   last_snapshot = query |> Snapshot.last |> Repo.one
+  #
+  #   unless is_nil last_snapshot do
+  #     state = %Room{state | positions: last_snapshot.positions}
+  #   end
+  #
+  #   {:reply, :ok, state}
+  # end
 
 end

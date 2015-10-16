@@ -25,12 +25,12 @@ form.link, form.button {
   border-bottom: 1px solid #e5e5e5;
 }
 .logo {
-  width: 519px;
-  height: 71px;
-  display: inline-block;
-  margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
-  background-size: 519px 71px;
+  // width: 519px;
+  // height: 71px;
+  // display: inline-block;
+  // margin-bottom: 1em;
+  // background-image: url("/images/phoenix.png");
+  // background-size: 519px 71px;
 }
 
 .made-with {
@@ -101,21 +101,34 @@ form.link, form.button {
     font-style: normal;
 }
 
-// div#content {
-//   background: url(/images/samsung.jpg) no-repeat scroll center top transparent;
-//   position: relative;
-//   margin: 0 auto;
-//   top: 50px;
-//   bottom:0;
-//   height: 2000px;
-//   width: 2000px;
-// }
+div#content {
+  // background: url(/images/lec.jpg) no-repeat scroll center top transparent;
+  position: relative;
+  // margin: 0 auto;
+  // top: 50px;
+  // bottom:0;
+  // height: 3438px;
+  // width: 2303px;
+  // -webkit-transform: scale(0.5); /* Saf3.1+, Chrome */
+  //    -moz-transform: scale(0.5); /* FF3.5+ */
+  //     -ms-transform: scale(0.5); /* IE9 */
+  //      -o-transform: scale(0.5); /* Opera 10.5+ */
+  //         transform: scale(0.5);
+  //            /* IE6–IE9 */
+  //            filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.9999619230641713, M12=-0.008726535498373935, M21=0.008726535498373935, M22=0.9999619230641713,SizingMethod='auto expand');
+  //
+}
 
 #username {
   margin: 4px;
 }
 
 #letters-container {
+  border: 1px solid red;
+  // position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // margin-top: -125px;
   position: relative;
   display: none;
 }
@@ -139,44 +152,44 @@ form.link, form.button {
   font-weight: bold;
 }
 
-.letter {
-  float:left;
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 50px;
-  cursor:move;
-  user-select: none;
-  width: 50px; height: 50px;
-  font-family: 'alphafridgemagnets_regular';
-  font-size: 50px;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 #ccc,
-    2px 2px 0 #090909,
-    3px 3px 0 #111,
-    0 4px 0 #191919,
-    0 5px 0 #121927,
-    0 6px 1px rgba(0,0,0,.1),
-    0 0 5px rgba(0,0,0,.1),
-    0 1px 3px rgba(0,0,0,.3),
-    0 3px 5px rgba(0,0,0,.2),
-    0 5px 10px rgba(0,0,0,.25),
-    0 10px 10px rgba(0,0,0,.2),
-    0 20px 20px rgba(0,0,0,.15);
-}
-
-
-@for $i from 65 through 90 {
-  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 0px; }
-}
-
-@for $i from 97 through 122 {
-  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 50px; }
-}
-
-@for $i from 48 through 57 {
-  .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 100px; }
-}
-
-.letter-33 { top: 100px; left: 100px; }
-.letter-63 { top: 150px; left: 100px; }
+// .letter {
+//   float:left;
+//   position: absolute;
+//   text-align: center;
+//   vertical-align: middle;
+//   line-height: 50px;
+//   cursor:move;
+//   user-select: none;
+//   width: 50px; height: 50px;
+//   font-family: 'alphafridgemagnets_regular';
+//   font-size: 50px;
+//   font-weight: bold;
+//   text-shadow: 1px 1px 0 #ccc,
+//     2px 2px 0 #090909,
+//     3px 3px 0 #111,
+//     0 4px 0 #191919,
+//     0 5px 0 #121927,
+//     0 6px 1px rgba(0,0,0,.1),
+//     0 0 5px rgba(0,0,0,.1),
+//     0 1px 3px rgba(0,0,0,.3),
+//     0 3px 5px rgba(0,0,0,.2),
+//     0 5px 10px rgba(0,0,0,.25),
+//     0 10px 10px rgba(0,0,0,.2),
+//     0 20px 20px rgba(0,0,0,.15);
+// }
+//
+//
+// @for $i from 65 through 90 {
+//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 0px; }
+// }
+//
+// @for $i from 97 through 122 {
+//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 50px; }
+// }
+//
+// @for $i from 48 through 57 {
+//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 100px; }
+// }
+//
+// .letter-33 { top: 100px; left: 100px; }
+// .letter-63 { top: 150px; left: 100px; }
