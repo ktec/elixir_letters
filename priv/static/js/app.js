@@ -122,26 +122,34 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _phoenix = require("phoenix");
 
-// let socket = new Socket("/ws")
-// socket.connect()
-// let chan = socket.chan("topic:subtopic", {})
-// chan.join().receive("ok", resp => {
-//   console.log("Joined succesffuly!", resp)
-// })
-
 var App = (function () {
   function App() {
     _classCallCheck(this, App);
   }
 
   _createClass(App, null, [{
+    key: "loadFonts",
+    value: function loadFonts() {
+
+      // Load them fonts before starting...!
+      WebFont.load({
+        custom: {
+          families: ['alphafridgemagnets_regular']
+        },
+        active: function active() {
+          // go go go!!
+          App.init();
+        }
+      });
+    }
+  }, {
     key: "init",
     value: function init() {
       var _this = this;
 
       var socket = new _phoenix.Socket("/socket", {
         logger: function logger(kind, msg, data) {
-          console.log(kind + ": " + msg, data);
+          //console.log(`${kind}: ${msg}`, data)
         }
       });
 
@@ -150,13 +158,14 @@ var App = (function () {
         return console.log("CLOSE", e);
       });
 
-      var $status = $("#status");
-      var $messages = $("#messages");
-      var $input = $("#message-input");
+      // const $status    = $("#status")
+      // const $messages  = $("#messages")
+      // const $input     = $("#message-input")
       var $username = $("#username");
       var $draggable = $(".draggable");
       var $client_id = this.guid();
       var $room = this.get_room();
+      var $container = $("#content");
 
       var chan = socket.chan("rooms:" + $room, { client_id: $client_id });
 
@@ -174,33 +183,46 @@ var App = (function () {
         return console.log("channel closed", e);
       });
 
-      chan.on("join", function (msg) {
-
-        for (var letter in msg.positions) {
-          //console.log("position received for ", letter)
-          _this.move_letter(letter, msg.positions[letter]);
-        }
-
-        $("#letters-container").show();
-
-        $("#content").keydown(function (event) {
-          //console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
+      var onDrag = function onDrag(id, x, y) {
+        chan.push("set:position", {
+          user: $client_id,
+          body: { id: id, x: x, y: y }
         });
+      };
 
-        $("#content").mousemove(function (event) {
-          chan.push("mousemove", {
-            client_id: $client_id,
-            username: $username.val(),
-            x: event.pageX, y: event.pageY
-          });
+      var onDragStop = function onDragStop(id, x, y) {
+        chan.push("save:snapshot", {});
+      };
+
+      var renderer = new PixiLayer($container, chan);
+      var letters_config = get_letters();
+      var lettersManager = new LettersManager(renderer.stage, letters_config, onDrag, onDragStop);
+
+      chan.on("join", function (msg) {
+        // console.log("join", msg)
+        lettersManager.setInitialPositions(msg.positions);
+        // $("#content").keydown(function (event){
+        //   //console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
+        // })
+        $("#letters-container").show();
+      });
+
+      $("#content").mousemove(function (event) {
+        chan.push("mousemove", {
+          client_id: $client_id,
+          username: $username.val(),
+          x: event.pageX, y: event.pageY
         });
       });
 
       chan.on("mousemove", function (msg) {
         if (msg.client_id != $client_id) {
-          //console.log msg
+          console.log(msg);
           var element = _this.find_or_create_cursor(msg.client_id, msg.username);
-          element.css('top', msg.y - 74).css('left', msg.x - 12).stop(true, false).fadeIn("fast").delay(2000).fadeOut("slow");
+          element.css('top', msg.y - 105).css('left', msg.x - 10).clearQueue().stop(true, false)
+          // .hide()
+          //.fadeIn(10)
+          .fadeTo('fast', 1).css('display', 'block').delay(1000).fadeOut(400);
         }
       });
 
@@ -210,28 +232,9 @@ var App = (function () {
 
       chan.on("update:position", function (msg) {
         if (msg.user != $client_id) {
-          _this.move_letter(msg.body.id, msg.body);
+          lettersManager.move_letter(msg.body.id, msg.body);
         }
       });
-
-      $draggable.on("drag", function (e, ui) {
-        chan.push("set:position", {
-          user: $client_id, body: {
-            id: e.target.id,
-            left: ui.position.left,
-            top: ui.position.top
-          }
-        });
-        //$(e.target).css('color',  '#'+('00000'+(Math.random()*16777216<<0).toString(16)).substr(-6))
-      });
-
-      $draggable.on("dragstart", function (e, ui) {});
-
-      $draggable.on("dragstop", function (e, ui) {
-        chan.push("save:snapshot", {});
-      });
-
-      $draggable.draggable();
     }
   }, {
     key: "sanitize_id",
@@ -264,21 +267,194 @@ var App = (function () {
       element.find(".name").text(username);
       return element;
     }
-  }, {
-    key: "move_letter",
-    value: function move_letter(id, pos) {
-      var element = $("#" + this.sanitize_id(id));
-      if (element.length) {
-        element.css('top', pos.top).css('left', pos.left);
-      }
-    }
   }]);
 
   return App;
 })();
 
+var PixiLayer = (function () {
+  function PixiLayer(container, chan) {
+    _classCallCheck(this, PixiLayer);
+
+    this.chan = chan;
+    this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0xffffff }, false, true);
+    this.renderer.view.id = "letters-container";
+    container.append(this.renderer.view);
+
+    // create the root of the scene graph
+    this.stage = new PIXI.Container(0x97c56e, true);
+    // add a shiny background...
+    var background = PIXI.Sprite.fromImage('/images/scrabble_board.png');
+    background.scale.set(0.7);
+    this.stage.addChild(background);
+    //
+    this.animate(this.animate, this.renderer, this.stage);
+  }
+
+  _createClass(PixiLayer, [{
+    key: "animate",
+    value: function animate(_animate, renderer, stage) {
+      // for (var i in letters_map) {
+      //   letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
+      // }
+      renderer.render(stage);
+      requestAnimationFrame(function () {
+        _animate(_animate, renderer, stage);
+      });
+    }
+  }]);
+
+  return PixiLayer;
+})();
+
+var LettersManager = (function () {
+  function LettersManager(stage, letters_config, onDrag, onDragStop) {
+    _classCallCheck(this, LettersManager);
+
+    this.stage = stage;
+    this.createLetters(letters_config, onDrag, onDragStop);
+  }
+
+  _createClass(LettersManager, [{
+    key: "setInitialPositions",
+    value: function setInitialPositions(positions) {
+      // initialise the letter positions
+      for (var letter in positions) {
+        this.move_letter(letter, positions[letter]);
+      }
+    }
+  }, {
+    key: "createLetters",
+    value: function createLetters(letters, onDrag, onDragStop) {
+      this.letters_map = {};
+      for (var i in letters) {
+        var id = letters[i]['code'] + '_' + letters[i]['count'];
+        var char = letters[i]['letter'];
+        var letter = new Letter(this.stage, id, char, 30, 30, onDrag, onDragStop);
+        this.letters_map[id] = letter;
+        // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
+      }
+      this.letters_map;
+    }
+  }, {
+    key: "move_letter",
+    value: function move_letter(id, position) {
+      try {
+        var letter = this.letters_map[id];
+        letter.position(position.x, position.y);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }]);
+
+  return LettersManager;
+})();
+
+var Letter = (function () {
+  function Letter(stage, id, char, x, y, onDrag, onDragStop) {
+    _classCallCheck(this, Letter);
+
+    //const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
+    var colours = ["FFFFFF"];
+
+    function getPoints(char) {
+      var points = {
+        1: "AEIOULNSTR",
+        2: "DG",
+        3: "BCMP",
+        4: "FHVWY",
+        5: "K",
+        8: "JX",
+        10: "QZ"
+      };
+      for (var i in points) {
+        if (points[i].toLowerCase().indexOf(char.toLowerCase()) != -1) {
+          return i;
+        }
+      }
+      return 1;
+    }
+
+    this.stage = stage;
+    var randomColour = colours[Math.floor(Math.random() * colours.length)];
+    var container = new PIXI.Container();
+    var tile = PIXI.Sprite.fromImage('/images/blank_tile.jpg');
+    tile.scale.x = 0.09;
+    tile.scale.y = 0.09;
+    var text = new PIXI.Text(char, { font: '26px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 2 });
+    var value = new PIXI.Text(getPoints(char), { font: '12px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 1 });
+    container.addChild(tile);
+    container.addChild(value);
+    container.addChild(text);
+    container.interactive = true;
+    container.buttonMode = true;
+    text.anchor.set(0.5);
+    tile.anchor.set(0.5);
+    value.anchor = new PIXI.Point(-0.9, -0.2);
+    container.id = id;
+    container["class"] = this;
+    //container.scale.set(3)
+    container
+    // events for drag start
+    .on('mousedown', this.onDragStart).on('touchstart', this.onDragStart)
+    // events for drag end
+    .on('mouseup', this.onDragEnd).on('mouseupoutside', this.onDragEnd).on('touchend', this.onDragEnd).on('touchendoutside', this.onDragEnd)
+    // events for drag move
+    .on('mousemove', this.onDragMove).on('touchmove', this.onDragMove);
+    container.position.x = x;
+    container.position.y = y;
+    this.letter = container;
+    this.stage.addChild(container);
+    this.broadcastDrag = onDrag;
+    this.broadcastDragStop = onDragStop;
+  }
+
+  _createClass(Letter, [{
+    key: "position",
+    value: function position(x, y) {
+      console.log("set position: ", x, y);
+      this.letter.position.x = x;
+      this.letter.position.y = y;
+    }
+  }, {
+    key: "onDragStart",
+    value: function onDragStart(event) {
+      // store a reference to the data
+      // the reason for this is because of multitouch
+      // we want to track the movement of this particular touch
+      this.data = event.data;
+      this.alpha = 0.5;
+      this.dragging = true;
+    }
+  }, {
+    key: "onDragEnd",
+    value: function onDragEnd() {
+      this.alpha = 1;
+      this.dragging = false;
+      // set the interaction data to null
+      this.data = null;
+      // TODO: Fix this with a js pub/sub solution
+      // Here is a great one http://davidwalsh.name/pubsub-javascript
+      this["class"].broadcastDragStop();
+    }
+  }, {
+    key: "onDragMove",
+    value: function onDragMove() {
+      if (this.dragging) {
+        var newPosition = this.data.getLocalPosition(this.parent);
+        this.position.x = newPosition.x;
+        this.position.y = newPosition.y;
+        this["class"].broadcastDrag(this.id, newPosition.x, newPosition.y);
+      }
+    }
+  }]);
+
+  return Letter;
+})();
+
 $(function () {
-  return App.init();
+  return App.loadFonts();
 });
 
 exports["default"] = App;

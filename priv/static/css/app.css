@@ -5163,65 +5163,50 @@ form.link, form.button {
 .header {
   border-bottom: 1px solid #e5e5e5; }
 
-/* line 27, stdin */
-.logo {
-  width: 519px;
-  height: 71px;
-  display: inline-block;
-  margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
-  background-size: 519px 71px; }
-
 /* line 36, stdin */
 .made-with {
   width: 92px;
   height: 20px;
   display: inline-block;
-  margin-bottom: 1em;
+  margin-top: 1em;
+  margin-right: 1em;
   background-image: url("/images/elixir.svg");
   background-size: 92px 20px;
   float: right; }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 48, stdin */
+/* line 49, stdin */
 .header, .marketing {
   padding-right: 15px;
-  padding-left: 15px; }
+  padding-left: 15px;
+  clear: both; }
 
 /* Customize container */
 @media (min-width: 768px) {
-  /* line 55, stdin */
+  /* line 57, stdin */
   .container {
     max-width: 760px; } }
 
-/* line 59, stdin */
-.container-narrow > hr {
-  margin: 30px 0; }
-
 /* Main marketing message */
-/* line 64, stdin */
+/* line 66, stdin */
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5; }
 
 /* Supporting marketing content */
-/* line 70, stdin */
-.marketing {
-  margin: 35px 0; }
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  /* line 78, stdin */
+  /* line 80, stdin */
   .header, .marketing {
     padding-right: 0;
     padding-left: 0; }
   /* Space out the masthead */
-  /* line 83, stdin */
+  /* line 85, stdin */
   .header {
     margin-bottom: 30px; }
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 87, stdin */
+  /* line 89, stdin */
   .jumbotron {
     border-bottom: 0; } }
 
@@ -5232,379 +5217,35 @@ form.link, form.button {
   font-weight: normal;
   font-style: normal; }
 
-/* line 104, stdin */
-div#content {
-  background: url(/images/samsung.jpg) no-repeat scroll center top transparent;
+/* line 106, stdin */
+#content {
   position: relative;
-  margin: 0 auto;
-  top: 50px;
-  bottom: 0;
-  height: 2000px;
-  width: 2000px; }
+  top: 82px;
+  bottom: 0; }
 
-/* line 114, stdin */
+/* line 112, stdin */
 #username {
   margin: 4px; }
 
-/* line 118, stdin */
+/* line 116, stdin */
 #letters-container {
   position: relative;
-  display: none; }
+  margin: 0 auto; }
 
-/* line 123, stdin */
+/* line 122, stdin */
 .mouse p {
   position: relative;
   top: 40px;
-  font-size: 18px; }
-
-/* line 129, stdin */
-.letter::selection {
-  background: transparent; }
-
-/* line 133, stdin */
-.mouse {
-  background: url(/images/cursor.png) no-repeat scroll center top transparent;
-  width: 32px;
-  height: 42px;
-  position: relative;
   font-size: 18px;
   font-weight: bold; }
 
-/* line 142, stdin */
-.letter {
-  float: left;
+/* line 132, stdin */
+.mouse {
+  width: 26px;
+  height: 26px;
   position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 50px;
-  cursor: move;
-  user-select: none;
-  width: 50px;
-  height: 50px;
-  font-family: 'alphafridgemagnets_regular';
-  font-size: 50px;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 #ccc, 2px 2px 0 #090909, 3px 3px 0 #111, 0 4px 0 #191919, 0 5px 0 #121927, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
-
-/* line 170, stdin */
-.letter-65 {
-  top: 100px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-66 {
-  top: 150px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-67 {
-  top: 200px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-68 {
-  top: 250px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-69 {
-  top: 300px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-70 {
-  top: 350px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-71 {
-  top: 400px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-72 {
-  top: 450px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-73 {
-  top: 500px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-74 {
-  top: 550px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-75 {
-  top: 600px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-76 {
-  top: 650px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-77 {
-  top: 700px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-78 {
-  top: 750px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-79 {
-  top: 800px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-80 {
-  top: 850px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-81 {
-  top: 900px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-82 {
-  top: 950px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-83 {
-  top: 1000px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-84 {
-  top: 1050px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-85 {
-  top: 1100px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-86 {
-  top: 1150px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-87 {
-  top: 1200px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-88 {
-  top: 1250px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-89 {
-  top: 1300px;
-  left: 0px; }
-
-/* line 170, stdin */
-.letter-90 {
-  top: 1350px;
-  left: 0px; }
-
-/* line 174, stdin */
-.letter-97 {
-  top: 100px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-98 {
-  top: 150px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-99 {
-  top: 200px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-100 {
-  top: 250px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-101 {
-  top: 300px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-102 {
-  top: 350px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-103 {
-  top: 400px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-104 {
-  top: 450px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-105 {
-  top: 500px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-106 {
-  top: 550px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-107 {
-  top: 600px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-108 {
-  top: 650px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-109 {
-  top: 700px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-110 {
-  top: 750px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-111 {
-  top: 800px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-112 {
-  top: 850px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-113 {
-  top: 900px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-114 {
-  top: 950px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-115 {
-  top: 1000px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-116 {
-  top: 1050px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-117 {
-  top: 1100px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-118 {
-  top: 1150px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-119 {
-  top: 1200px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-120 {
-  top: 1250px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-121 {
-  top: 1300px;
-  left: 50px; }
-
-/* line 174, stdin */
-.letter-122 {
-  top: 1350px;
-  left: 50px; }
-
-/* line 178, stdin */
-.letter-48 {
-  top: 850px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-49 {
-  top: 900px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-50 {
-  top: 950px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-51 {
-  top: 1000px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-52 {
-  top: 1050px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-53 {
-  top: 1100px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-54 {
-  top: 1150px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-55 {
-  top: 1200px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-56 {
-  top: 1250px;
-  left: 100px; }
-
-/* line 178, stdin */
-.letter-57 {
-  top: 1300px;
-  left: 100px; }
-
-/* line 181, stdin */
-.letter-33 {
-  top: 100px;
-  left: 100px; }
-
-/* line 182, stdin */
-.letter-63 {
-  top: 150px;
-  left: 100px; }
+  background: url("/images/cursor-hand-white.svg");
+  background-size: 26px 26px; }
 
 
 /*# sourceMappingURL=app.css.map*/
