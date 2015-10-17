@@ -5168,51 +5168,45 @@ form.link, form.button {
   width: 92px;
   height: 20px;
   display: inline-block;
-  margin-bottom: 1em;
+  margin-top: 1em;
+  margin-right: 1em;
   background-image: url("/images/elixir.svg");
   background-size: 92px 20px;
   float: right; }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-/* line 48, stdin */
+/* line 49, stdin */
 .header, .marketing {
   padding-right: 15px;
-  padding-left: 15px; }
+  padding-left: 15px;
+  clear: both; }
 
 /* Customize container */
 @media (min-width: 768px) {
-  /* line 55, stdin */
+  /* line 57, stdin */
   .container {
     max-width: 760px; } }
 
-/* line 59, stdin */
-.container-narrow > hr {
-  margin: 30px 0; }
-
 /* Main marketing message */
-/* line 64, stdin */
+/* line 66, stdin */
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5; }
 
 /* Supporting marketing content */
-/* line 70, stdin */
-.marketing {
-  margin: 35px 0; }
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  /* line 78, stdin */
+  /* line 80, stdin */
   .header, .marketing {
     padding-right: 0;
     padding-left: 0; }
   /* Space out the masthead */
-  /* line 83, stdin */
+  /* line 85, stdin */
   .header {
     margin-bottom: 30px; }
   /* Remove the bottom border on the jumbotron for visual effect */
-  /* line 87, stdin */
+  /* line 89, stdin */
   .jumbotron {
     border-bottom: 0; } }
 
@@ -5223,36 +5217,33 @@ form.link, form.button {
   font-weight: normal;
   font-style: normal; }
 
-/* line 104, stdin */
-div#content {
-  position: relative; }
+/* line 106, stdin */
+#content {
+  position: relative;
+  top: 82px;
+  margin: 0 auto;
+  bottom: 0; }
 
-/* line 122, stdin */
+/* line 113, stdin */
 #username {
   margin: 4px; }
 
-/* line 126, stdin */
+/* line 117, stdin */
 #letters-container {
-  border: 1px solid red;
-  position: relative;
-  display: none; }
+  position: relative; }
 
-/* line 136, stdin */
+/* line 122, stdin */
 .mouse p {
   position: relative;
   top: 40px;
   font-size: 18px; }
 
-/* line 142, stdin */
-.letter::selection {
-  background: transparent; }
-
-/* line 146, stdin */
+/* line 132, stdin */
 .mouse {
   background: url(/images/cursor.png) no-repeat scroll center top transparent;
   width: 32px;
   height: 42px;
-  position: relative;
+  position: absolute;
   font-size: 18px;
   font-weight: bold; }
 

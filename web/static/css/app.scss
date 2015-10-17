@@ -37,7 +37,8 @@ form.link, form.button {
   width: 92px;
   height: 20px;
   display: inline-block;
-  margin-bottom: 1em;
+  margin-top: 1em;
+  margin-right: 1em;
   background-image: url("/images/elixir.svg");
   background-size: 92px 20px;
   float: right;
@@ -48,6 +49,7 @@ form.link, form.button {
 .marketing {
   padding-right: 15px;
   padding-left: 15px;
+  clear: both;
 }
 
 /* Customize container */
@@ -57,7 +59,7 @@ form.link, form.button {
   }
 }
 .container-narrow > hr {
-  margin: 30px 0;
+//  margin: 30px 0;
 }
 
 /* Main marketing message */
@@ -68,7 +70,7 @@ form.link, form.button {
 
 /* Supporting marketing content */
 .marketing {
-  margin: 35px 0;
+//  margin: 35px 0;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -101,22 +103,11 @@ form.link, form.button {
     font-style: normal;
 }
 
-div#content {
-  // background: url(/images/lec.jpg) no-repeat scroll center top transparent;
+#content {
   position: relative;
-  // margin: 0 auto;
-  // top: 50px;
-  // bottom:0;
-  // height: 3438px;
-  // width: 2303px;
-  // -webkit-transform: scale(0.5); /* Saf3.1+, Chrome */
-  //    -moz-transform: scale(0.5); /* FF3.5+ */
-  //     -ms-transform: scale(0.5); /* IE9 */
-  //      -o-transform: scale(0.5); /* Opera 10.5+ */
-  //         transform: scale(0.5);
-  //            /* IE6–IE9 */
-  //            filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.9999619230641713, M12=-0.008726535498373935, M21=0.008726535498373935, M22=0.9999619230641713,SizingMethod='auto expand');
-  //
+  top: 82px;
+  margin: 0 auto;
+  bottom:0;
 }
 
 #username {
@@ -124,13 +115,8 @@ div#content {
 }
 
 #letters-container {
-  border: 1px solid red;
-  // position: fixed;
-  // top: 50%;
-  // left: 50%;
-  // margin-top: -125px;
   position: relative;
-  display: none;
+  // display: none;
 }
 
 .mouse p {
@@ -139,15 +125,15 @@ div#content {
   font-size: 18px;
 }
 
-.letter::selection {
-  background: transparent;
-}
+// .letter::selection {
+//   background: transparent;
+// }
 
 .mouse {
   background: url(/images/cursor.png) no-repeat scroll center top transparent;
   width: 32px;
   height: 42px;
-  position: relative;
+  position: absolute;
   font-size: 18px;
   font-weight: bold;
 }

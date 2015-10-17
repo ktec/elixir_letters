@@ -144,6 +144,8 @@ var App = (function () {
   }, {
     key: "init",
     value: function init() {
+      var _this = this;
+
       var socket = new _phoenix.Socket("/socket", {
         logger: function logger(kind, msg, data) {
           //console.log(`${kind}: ${msg}`, data)
@@ -192,7 +194,6 @@ var App = (function () {
 
       var letters_map = this.setupPixi(chan, onDrag, onDragStop);
       function move_letter(id, position) {
-        console.log('Move Letter', id, position);
         var element = letters_map[id];
         if (element) {
           element.position.x = position.x;
@@ -223,19 +224,15 @@ var App = (function () {
         });
       });
 
-      // chan.on("mousemove", msg => {
-      //   if (msg.client_id != $client_id){
-      //     //console.log msg
-      //     let element = this.find_or_create_cursor(msg.client_id, msg.username)
-      //     element
-      //       .css('top', msg.y - 74)
-      //       .css('left', msg.x - 12)
-      //       .stop(true,false)
-      //       .fadeIn("fast")
-      //       .delay(2000)
-      //       .fadeOut("slow")
-      //   }
-      // })
+      chan.on("mousemove", function (msg) {
+        if (msg.client_id != $client_id) {
+          console.log(msg);
+          var element = _this.find_or_create_cursor(msg.client_id, msg.username);
+          element.css('top', msg.y - 74).css('left', msg.x - 12).stop(true, false).css('opacity', 1);
+          // .delay(4000)
+          // .fadeOut("slow")
+        }
+      });
 
       chan.on("user_count:update", function (msg) {
         $("#user_count").text(msg.user_count);
@@ -274,9 +271,9 @@ var App = (function () {
     key: "setupPixi",
     value: function setupPixi(chan, onDrag, onDragStop) {
 
-      var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight - 160, { backgroundColor: 0x97c56e }, false, true);
+      var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x97c56e }, false, true);
       renderer.view.id = "letters-container";
-      document.body.appendChild(renderer.view);
+      $("#content").append(renderer.view);
 
       // create the root of the scene graph
       var stage = new PIXI.Container(0x97c56e, true);
@@ -295,7 +292,7 @@ var App = (function () {
       }
 
       function createLetter(id, char, x, y) {
-        var letter = new PIXI.Text(char, { font: 'bold 72px alphafridgemagnets_regular', fill: '#cc00ff', align: 'center', stroke: '#FFFFFF', strokeThickness: 12 });
+        var letter = new PIXI.Text(char, { font: '122px alphafridgemagnets_regular', fill: '#cc00ff', align: 'center', stroke: '#FFFFFF', strokeThickness: 12 });
         letter.interactive = true;
         letter.buttonMode = true;
         letter.anchor.set(0.5);
@@ -344,7 +341,7 @@ var App = (function () {
       requestAnimationFrame(animate);
       function animate() {
         for (var i in letters_map) {
-          //letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
+          letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0;
         }
         renderer.render(stage);
 
