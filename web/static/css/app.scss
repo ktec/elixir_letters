@@ -92,15 +92,15 @@ form.link, form.button {
 }
 
 @font-face {
-    font-family: 'alphafridgemagnets_regular';
-    src: url('/fonts/alphafridgemagnets-webfont.eot');
-    src: url('/fonts/alphafridgemagnets-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/alphafridgemagnets-webfont.woff2') format('woff2'),
-         url('/fonts/alphafridgemagnets-webfont.woff') format('woff'),
-         url('/fonts/alphafridgemagnets-webfont.ttf') format('truetype'),
-         url('/fonts/alphafridgemagnets-webfont.svg#alphafridgemagnets_regular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'alphafridgemagnets_regular';
+  src: url('/fonts/alphafridgemagnets-webfont.eot');
+  src: url('/fonts/alphafridgemagnets-webfont.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/alphafridgemagnets-webfont.woff2') format('woff2'),
+       url('/fonts/alphafridgemagnets-webfont.woff') format('woff'),
+       url('/fonts/alphafridgemagnets-webfont.ttf') format('truetype'),
+       url('/fonts/alphafridgemagnets-webfont.svg#alphafridgemagnets_regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 #content {
@@ -120,62 +120,19 @@ form.link, form.button {
 }
 
 .mouse p {
+  // border: 2px solid green;
   position: relative;
   top: 40px;
   font-size: 18px;
+  font-weight: bold;
+  //   margin-top: 1em;
+  //   margin-right: 1em;
 }
-
-// .letter::selection {
-//   background: transparent;
-// }
 
 .mouse {
-  background: url(/images/cursor.png) no-repeat scroll center top transparent;
-  width: 32px;
-  height: 42px;
+  // border: 2px solid red;
+  width: 32px; height: 32px;
   position: absolute;
-  font-size: 18px;
-  font-weight: bold;
+  background: url("/images/cursor-hand-white.svg");
+  background-size: 32px 32px;
 }
-
-// .letter {
-//   float:left;
-//   position: absolute;
-//   text-align: center;
-//   vertical-align: middle;
-//   line-height: 50px;
-//   cursor:move;
-//   user-select: none;
-//   width: 50px; height: 50px;
-//   font-family: 'alphafridgemagnets_regular';
-//   font-size: 50px;
-//   font-weight: bold;
-//   text-shadow: 1px 1px 0 #ccc,
-//     2px 2px 0 #090909,
-//     3px 3px 0 #111,
-//     0 4px 0 #191919,
-//     0 5px 0 #121927,
-//     0 6px 1px rgba(0,0,0,.1),
-//     0 0 5px rgba(0,0,0,.1),
-//     0 1px 3px rgba(0,0,0,.3),
-//     0 3px 5px rgba(0,0,0,.2),
-//     0 5px 10px rgba(0,0,0,.25),
-//     0 10px 10px rgba(0,0,0,.2),
-//     0 20px 20px rgba(0,0,0,.15);
-// }
-//
-//
-// @for $i from 65 through 90 {
-//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 0px; }
-// }
-//
-// @for $i from 97 through 122 {
-//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 50px; }
-// }
-//
-// @for $i from 48 through 57 {
-//   .letter-#{$i} { top: #{50 + (50 * ($i % 32))}px;  left: 100px; }
-// }
-//
-// .letter-33 { top: 100px; left: 100px; }
-// .letter-63 { top: 150px; left: 100px; }

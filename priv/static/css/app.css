@@ -5236,16 +5236,16 @@ form.link, form.button {
 .mouse p {
   position: relative;
   top: 40px;
-  font-size: 18px; }
+  font-size: 18px;
+  font-weight: bold; }
 
 /* line 132, stdin */
 .mouse {
-  background: url(/images/cursor.png) no-repeat scroll center top transparent;
   width: 32px;
-  height: 42px;
+  height: 32px;
   position: absolute;
-  font-size: 18px;
-  font-weight: bold; }
+  background: url("/images/cursor-hand-white.svg");
+  background-size: 32px 32px; }
 
 
 /*# sourceMappingURL=app.css.map*/

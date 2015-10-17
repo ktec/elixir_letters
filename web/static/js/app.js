@@ -9,8 +9,8 @@ class App {
         families: ['alphafridgemagnets_regular']
       },
       active: function() {
-          // go go go!!
-          App.init()
+        // go go go!!
+        App.init()
       }
     })
   }
@@ -25,13 +25,14 @@ class App {
     socket.connect()
     socket.onClose( e => console.log("CLOSE", e))
 
-    const $status    = $("#status")
-    const $messages  = $("#messages")
-    const $input     = $("#message-input")
+    // const $status    = $("#status")
+    // const $messages  = $("#messages")
+    // const $input     = $("#message-input")
     const $username  = $("#username")
     const $draggable = $(".draggable")
-    const $client_id  = this.guid()
-    const $room       = this.get_room()
+    const $client_id = this.guid()
+    const $room      = this.get_room()
+    const $container = $("#content")
 
     const chan = socket.chan("rooms:" + $room,
       { client_id: $client_id }
@@ -43,40 +44,28 @@ class App {
     chan.onError(e => console.log("something went wrong", e))
     chan.onClose(e => console.log("channel closed", e))
 
-    function onDrag(id,x,y) {
+    let onDrag = function(id,x,y) {
       chan.push("set:position", {
         user: $client_id,
         body: { id: id, x: x, y: y }
       })
     }
 
-    function onDragStop(id,x,y) {
+    let onDragStop = function(id,x,y) {
       chan.push("save:snapshot", {})
     }
 
-    let letters_map = this.setupPixi(chan, onDrag, onDragStop)
-    function move_letter(id, position){
-      let element = letters_map[id]
-      if (element) {
-        element.position.x = position.x
-        element.position.y = position.y
-      }
-    }
+    const renderer = new PixiLayer($container, chan)
+    const letters_config = get_letters()
+    const lettersManager = new LettersManager(renderer.stage, letters_config, onDrag, onDragStop)
 
     chan.on("join", msg=>{
-      console.log("join", msg)
-
+      // console.log("join", msg)
+      lettersManager.setInitialPositions(msg.positions)
       // $("#content").keydown(function (event){
       //   //console.log("You pressed the key: ", String.fromCharCode(event.keyCode))
       // })
-
-      // initialise the letter positions
-      for (var letter in msg.positions){
-        move_letter(letter, msg.positions[letter])
-      }
-
       $("#letters-container").show()
-
     })
 
     $("#content").mousemove(function(event) {
@@ -94,12 +83,14 @@ class App {
         console.log(msg)
         let element = this.find_or_create_cursor(msg.client_id, msg.username)
         element
-          .css('top', msg.y - 74)
-          .css('left', msg.x - 12)
+          .css('top', msg.y - 105)
+          .css('left', msg.x - 10)
+          .clearQueue()
           .stop(true,false)
-          .css('opacity', 1)
-          // .delay(4000)
-          // .fadeOut("slow")
+          // .hide()
+          .fadeIn(10)
+          // .css('opacity', 1)
+          .delay(1000).fadeOut(400)
       }
     })
 
@@ -109,7 +100,7 @@ class App {
 
     chan.on("update:position", msg => {
       if (msg.user != $client_id){
-        move_letter(msg.body.id, msg.body)
+        lettersManager.move_letter(msg.body.id, msg.body)
       }
     })
 
@@ -137,101 +128,6 @@ class App {
       s4() + '-' + s4() + s4() + s4()
   }
 
-  static setupPixi(chan, onDrag, onDragStop) {
-
-    const renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0x97c56e}, false, true)
-    renderer.view.id = "letters-container"
-    $("#content").append(renderer.view)
-
-    // create the root of the scene graph
-    let stage = new PIXI.Container(0x97c56e, true)
-
-    // add a shiny background...
-    // let background = PIXI.Sprite.fromImage('/images/lec.jpg')
-    // background.scale.set(0.7)
-    // stage.addChild(background)
-
-    let letters = get_letters()
-    let letters_map = {}
-    for (var i in letters)
-    {
-      let id = letters[i]['code'] + '_' +  letters[i]['count']
-      let char = letters[i]['letter']
-      letters_map[id] = createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
-    }
-
-    function createLetter(id, char, x, y)
-    {
-      let letter = new PIXI.Text(char, { font: '122px alphafridgemagnets_regular', fill: '#cc00ff', align: 'center', stroke: '#FFFFFF', strokeThickness: 12 })
-      letter.interactive = true
-      letter.buttonMode = true
-      letter.anchor.set(0.5)
-      letter.id = id
-      //letter.scale.set(3)
-      letter
-          // events for drag start
-          .on('mousedown', onDragStart)
-          .on('touchstart', onDragStart)
-          // events for drag end
-          .on('mouseup', onDragEnd)
-          .on('mouseupoutside', onDragEnd)
-          .on('touchend', onDragEnd)
-          .on('touchendoutside', onDragEnd)
-          // events for drag move
-          .on('mousemove', onDragMove)
-          .on('touchmove', onDragMove)
-      letter.position.x = x
-      letter.position.y = y
-      stage.addChild(letter)
-      return letter
-    }
-
-    function onDragStart(event)
-    {
-        // store a reference to the data
-        // the reason for this is because of multitouch
-        // we want to track the movement of this particular touch
-        this.data = event.data
-        this.alpha = 0.5
-        this.dragging = true
-    }
-
-    function onDragEnd()
-    {
-        this.alpha = 1
-        this.dragging = false
-        // set the interaction data to null
-        this.data = null
-        onDragStop()
-    }
-
-    function onDragMove()
-    {
-        if (this.dragging)
-        {
-            var newPosition = this.data.getLocalPosition(this.parent)
-            this.position.x = newPosition.x
-            this.position.y = newPosition.y
-
-            onDrag(this.id,newPosition.x,newPosition.y)
-        }
-    }
-
-    requestAnimationFrame(animate)
-    function animate() {
-      for (var i in letters_map)
-      {
-        letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
-      }
-      renderer.render(stage)
-
-      requestAnimationFrame(animate)
-    }
-
-    return letters_map
-
-  }
-
   static find_or_create_cursor(id, username) {
     let element = $("#" + id)
     if (!element.length)
@@ -242,6 +138,127 @@ class App {
     return element
   }
 
+}
+
+class PixiLayer {
+  constructor(container, chan){
+    this.chan = chan
+    this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0x97c56e}, false, true)
+    this.renderer.view.id = "letters-container"
+    container.append(this.renderer.view)
+
+    // create the root of the scene graph
+    this.stage = new PIXI.Container(0x97c56e, true)
+    // add a shiny background...
+    // let background = PIXI.Sprite.fromImage('/images/lec.jpg')
+    // background.scale.set(0.7)
+    // stage.addChild(background)
+    //
+    this.animate(this.animate, this.renderer,this.stage)
+  }
+
+  animate(animate, renderer, stage) {
+    // for (var i in letters_map) {
+    //   letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
+    // }
+    renderer.render(stage)
+    requestAnimationFrame(function(){
+      animate(animate, renderer, stage)
+    })
+  }
+
+}
+
+class LettersManager {
+  constructor(stage, letters_config, onDrag, onDragStop){
+    this.stage = stage
+    this.createLetters(letters_config, onDrag, onDragStop)
+  }
+  setInitialPositions(positions){
+    // initialise the letter positions
+    for (var letter in positions){
+      this.move_letter(letter, positions[letter])
+    }
+  }
+  createLetters(letters, onDrag, onDragStop){
+    this.letters_map = {}
+    for (var i in letters)
+    {
+      let id = letters[i]['code'] + '_' +  letters[i]['count']
+      let char = letters[i]['letter']
+      let letter = new Letter(this.stage, id, char, 30, 30, onDrag, onDragStop)
+      this.letters_map[id] = letter
+      // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
+    }
+    this.letters_map
+  }
+  move_letter(id, position){
+    try {
+      let letter = this.letters_map[id]
+      letter.position(position.x,position.y)
+    } catch (e) {
+      logger.error(e)
+    }
+  }
+}
+
+class Letter {
+  constructor(stage, id, char, x, y, onDrag, onDragStop) {
+    this.stage = stage
+    this.letter = new PIXI.Text(char, { font: '122px alphafridgemagnets_regular', fill: '#cc00ff', align: 'center', stroke: '#FFFFFF', strokeThickness: 12 })
+    this.letter.interactive = true
+    this.letter.buttonMode = true
+    this.letter.anchor.set(0.5)
+    this.letter.id = id
+    this.letter.class = this
+    //letter.scale.set(3)
+    this.letter
+        // events for drag start
+        .on('mousedown', this.onDragStart)
+        .on('touchstart', this.onDragStart)
+        // events for drag end
+        .on('mouseup', this.onDragEnd)
+        .on('mouseupoutside', this.onDragEnd)
+        .on('touchend', this.onDragEnd)
+        .on('touchendoutside', this.onDragEnd)
+        // events for drag move
+        .on('mousemove', this.onDragMove)
+        .on('touchmove', this.onDragMove)
+    this.letter.position.x = x
+    this.letter.position.y = y
+    this.stage.addChild(this.letter)
+    this.broadcastDrag = onDrag
+    this.broadcastDragStop = onDragStop
+  }
+  position(x,y){
+    this.letter.position.x = x
+    this.letter.position.y = y
+  }
+  onDragStart(event){
+    // store a reference to the data
+    // the reason for this is because of multitouch
+    // we want to track the movement of this particular touch
+    this.data = event.data
+    this.alpha = 0.5
+    this.dragging = true
+  }
+  onDragEnd(){
+    this.alpha = 1
+    this.dragging = false
+    // set the interaction data to null
+    this.data = null
+    // TODO: Fix this with a js pub/sub solution
+    // Here is a great one http://davidwalsh.name/pubsub-javascript
+    this.class.broadcastDragStop()
+  }
+  onDragMove(){
+    if (this.dragging){
+      var newPosition = this.data.getLocalPosition(this.parent)
+      this.position.x = newPosition.x
+      this.position.y = newPosition.y
+      this.class.broadcastDrag(this.id,newPosition.x,newPosition.y)
+    }
+  }
 }
 
 $( () => App.loadFonts() )
