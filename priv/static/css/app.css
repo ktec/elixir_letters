@@ -5221,16 +5221,16 @@ form.link, form.button {
 #content {
   position: relative;
   top: 82px;
-  margin: 0 auto;
   bottom: 0; }
 
-/* line 113, stdin */
+/* line 112, stdin */
 #username {
   margin: 4px; }
 
-/* line 117, stdin */
+/* line 116, stdin */
 #letters-container {
-  position: relative; }
+  position: relative;
+  margin: 0 auto; }
 
 /* line 122, stdin */
 .mouse p {
@@ -5241,11 +5241,11 @@ form.link, form.button {
 
 /* line 132, stdin */
 .mouse {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   position: absolute;
   background: url("/images/cursor-hand-white.svg");
-  background-size: 32px 32px; }
+  background-size: 26px 26px; }
 
 
 /*# sourceMappingURL=app.css.map*/

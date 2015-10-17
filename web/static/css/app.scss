@@ -106,7 +106,6 @@ form.link, form.button {
 #content {
   position: relative;
   top: 82px;
-  margin: 0 auto;
   bottom:0;
 }
 
@@ -116,6 +115,7 @@ form.link, form.button {
 
 #letters-container {
   position: relative;
+  margin: 0 auto;
   // display: none;
 }
 
@@ -131,8 +131,8 @@ form.link, form.button {
 
 .mouse {
   // border: 2px solid red;
-  width: 32px; height: 32px;
+  width: 26px; height: 26px;
   position: absolute;
   background: url("/images/cursor-hand-white.svg");
-  background-size: 32px 32px;
+  background-size: 26px 26px;
 }

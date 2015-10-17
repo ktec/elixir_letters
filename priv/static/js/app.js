@@ -130,6 +130,7 @@ var App = (function () {
   _createClass(App, null, [{
     key: "loadFonts",
     value: function loadFonts() {
+
       // Load them fonts before starting...!
       WebFont.load({
         custom: {
@@ -220,9 +221,8 @@ var App = (function () {
           var element = _this.find_or_create_cursor(msg.client_id, msg.username);
           element.css('top', msg.y - 105).css('left', msg.x - 10).clearQueue().stop(true, false)
           // .hide()
-          .fadeIn(10)
-          // .css('opacity', 1)
-          .delay(1000).fadeOut(400);
+          //.fadeIn(10)
+          .fadeTo('fast', 1).css('display', 'block').delay(1000).fadeOut(400);
         }
       });
 
@@ -277,16 +277,16 @@ var PixiLayer = (function () {
     _classCallCheck(this, PixiLayer);
 
     this.chan = chan;
-    this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0x97c56e }, false, true);
+    this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0xffffff }, false, true);
     this.renderer.view.id = "letters-container";
     container.append(this.renderer.view);
 
     // create the root of the scene graph
     this.stage = new PIXI.Container(0x97c56e, true);
     // add a shiny background...
-    // let background = PIXI.Sprite.fromImage('/images/lec.jpg')
-    // background.scale.set(0.7)
-    // stage.addChild(background)
+    var background = PIXI.Sprite.fromImage('/images/scrabble_board.png');
+    background.scale.set(0.7);
+    this.stage.addChild(background);
     //
     this.animate(this.animate, this.renderer, this.stage);
   }
@@ -343,7 +343,7 @@ var LettersManager = (function () {
         var letter = this.letters_map[id];
         letter.position(position.x, position.y);
       } catch (e) {
-        logger.error(e);
+        console.log(e);
       }
     }
   }]);
@@ -355,24 +355,57 @@ var Letter = (function () {
   function Letter(stage, id, char, x, y, onDrag, onDragStop) {
     _classCallCheck(this, Letter);
 
+    //const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
+    var colours = ["FFFFFF"];
+
+    function getPoints(char) {
+      var points = {
+        1: "AEIOULNSTR",
+        2: "DG",
+        3: "BCMP",
+        4: "FHVWY",
+        5: "K",
+        8: "JX",
+        10: "QZ"
+      };
+      for (var i in points) {
+        if (points[i].toLowerCase().indexOf(char) !== -1) {
+          return i;
+        }
+      }
+      return 1;
+    }
+
     this.stage = stage;
-    this.letter = new PIXI.Text(char, { font: '122px alphafridgemagnets_regular', fill: '#cc00ff', align: 'center', stroke: '#FFFFFF', strokeThickness: 12 });
-    this.letter.interactive = true;
-    this.letter.buttonMode = true;
-    this.letter.anchor.set(0.5);
-    this.letter.id = id;
-    this.letter["class"] = this;
-    //letter.scale.set(3)
-    this.letter
+    var randomColour = colours[Math.floor(Math.random() * colours.length)];
+    var container = new PIXI.Container();
+    var tile = PIXI.Sprite.fromImage('/images/blank_tile.jpg');
+    tile.scale.x = 0.09;
+    tile.scale.y = 0.09;
+    var text = new PIXI.Text(char, { font: '26px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 2 });
+    var value = new PIXI.Text(getPoints(char), { font: '12px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 1 });
+    container.addChild(tile);
+    container.addChild(value);
+    container.addChild(text);
+    container.interactive = true;
+    container.buttonMode = true;
+    text.anchor.set(0.5);
+    tile.anchor.set(0.5);
+    value.anchor = new PIXI.Point(-0.9, -0.2);
+    container.id = id;
+    container["class"] = this;
+    //container.scale.set(3)
+    container
     // events for drag start
     .on('mousedown', this.onDragStart).on('touchstart', this.onDragStart)
     // events for drag end
     .on('mouseup', this.onDragEnd).on('mouseupoutside', this.onDragEnd).on('touchend', this.onDragEnd).on('touchendoutside', this.onDragEnd)
     // events for drag move
     .on('mousemove', this.onDragMove).on('touchmove', this.onDragMove);
-    this.letter.position.x = x;
-    this.letter.position.y = y;
-    this.stage.addChild(this.letter);
+    container.position.x = x;
+    container.position.y = y;
+    this.letter = container;
+    this.stage.addChild(container);
     this.broadcastDrag = onDrag;
     this.broadcastDragStop = onDragStop;
   }
@@ -380,6 +413,7 @@ var Letter = (function () {
   _createClass(Letter, [{
     key: "position",
     value: function position(x, y) {
+      console.log("set position: ", x, y);
       this.letter.position.x = x;
       this.letter.position.y = y;
     }
