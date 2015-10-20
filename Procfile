@@ -1,1 +1,1 @@
-mix phoenix.server
+web: mix phoenix.server
