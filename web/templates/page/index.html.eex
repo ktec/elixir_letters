@@ -2,10 +2,7 @@
 function get_letters(letter_constructor) {
   return [
     <%= for {<< letter_code :: utf8 >> = letter, count} <- @letters, letter_count <- 1..count do %>
-    <% colour = @colours
-                |> Enum.shuffle
-                |> Enum.take(1) %>
-    {code:<%= letter_code %>,count:<%= letter_count %>,letter:"<%= letter %>"},
+    ["<%= letter_code %>_<%= letter_count %>","<%= letter %>"],
     <% end %>
   ]
 }

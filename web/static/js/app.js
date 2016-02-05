@@ -7,7 +7,7 @@ class App {
     // Load them fonts before starting...!
     WebFont.load({
       custom: {
-        families: ['alphafridgemagnets_regular']
+        families: ['rounds_blackregular']
       },
       active: function() {
         // go go go!!
@@ -39,9 +39,10 @@ class App {
       { client_id: $client_id }
     )
 
-    chan.join().receive("ignore", () => console.log("auth error"))
-               .receive("ok", () => console.log("join ok"))
-               .after(10000, () => console.log("Connection interruption"))
+    chan.join()
+      .receive("ignore", () => console.log("auth error"))
+      .receive("ok", () => console.log("join ok"))
+      .after(10000, () => console.log("Connection interruption"))
     chan.onError(e => console.log("something went wrong", e))
     chan.onClose(e => console.log("channel closed", e))
 
@@ -56,9 +57,20 @@ class App {
       chan.push("save:snapshot", {})
     }
 
-    const renderer = new PixiLayer($container, chan)
+    // create the root of the scene graph
+    const stage = new PIXI.Container(0x97c56e, true)
+    const renderer = new PixiLayer($container, chan, stage)
+
+    // add a shiny background...
+    let background = PIXI.Sprite.fromImage('/images/servis.jpg')
+    background.scale.set(0.7)
+    background.anchor.set(0.5)
+    background.position.x = window.innerWidth/2
+    background.position.y = 350 + window.innerHeight/2
+    stage.addChild(background)
+
     const letters_config = get_letters()
-    const lettersManager = new LettersManager(renderer.stage, letters_config, onDrag, onDragStop)
+    const lettersManager = new LettersManager(stage, letters_config, onDrag, onDragStop)
 
     chan.on("join", msg=>{
       // console.log("join", msg)
@@ -81,7 +93,7 @@ class App {
 
     chan.on("mousemove", msg => {
       if (msg.client_id != $client_id){
-        console.log(msg)
+        // console.log(msg)
         let element = this.find_or_create_cursor(msg.client_id, msg.username)
         element
           .css('top', msg.y - 105)
@@ -92,7 +104,8 @@ class App {
           //.fadeIn(10)
           .fadeTo('fast', 1 )
           .css('display', 'block')
-          .delay(1000).fadeOut(400)
+          .delay(1000)
+          .fadeOut(400)
       }
     })
 
@@ -102,7 +115,7 @@ class App {
 
     chan.on("update:position", msg => {
       if (msg.user != $client_id){
-        lettersManager.move_letter(msg.body.id, msg.body)
+        lettersManager.moveLetter(msg.body.id, msg.body)
       }
     })
 
@@ -143,20 +156,17 @@ class App {
 }
 
 class PixiLayer {
-  constructor(container, chan){
+  constructor(container, chan, stage){
     this.chan = chan
-    this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0xffffff}, false, true)
-    this.renderer.view.id = "letters-container"
-    container.append(this.renderer.view)
+    let renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, {backgroundColor : 0xffffff}, false, true)
+    renderer.view.style.width = window.innerWidth + "px"
+  	renderer.view.style.height = window.innerHeight + "px"
+  	renderer.view.style.display = "block"
 
-    // create the root of the scene graph
-    this.stage = new PIXI.Container(0x97c56e, true)
-    // add a shiny background...
-    let background = PIXI.Sprite.fromImage('/images/scrabble_board.png')
-    background.scale.set(0.7)
-    this.stage.addChild(background)
+    renderer.view.id = "letters-container"
+    container.append(renderer.view)
     //
-    this.animate(this.animate, this.renderer,this.stage)
+    this.animate(this.animate, renderer, stage)
   }
 
   animate(animate, renderer, stage) {
@@ -171,31 +181,32 @@ class PixiLayer {
 }
 
 class LettersManager {
-  constructor(stage, letters_config, onDrag, onDragStop){
+  constructor(stage, letters_config, onDrag, onDragStop) {
     this.stage = stage
-    this.createLetters(letters_config, onDrag, onDragStop)
+    this.createLetters(letters_config, stage, onDrag, onDragStop)
   }
-  setInitialPositions(positions){
+  setInitialPositions(positions) {
     // initialise the letter positions
     for (var letter in positions){
-      this.move_letter(letter, positions[letter])
+      this.moveLetter(letter, positions[letter])
     }
   }
-  createLetters(letters, onDrag, onDragStop){
-    this.letters_map = {}
+  createLetters(letters, stage, onDrag, onDragStop) {
+    const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
+    var letter_map = {}
     for (var i in letters)
     {
-      let id = letters[i]['code'] + '_' +  letters[i]['count']
-      let char = letters[i]['letter']
-      let letter = new Letter(this.stage, id, char, 30, 30, onDrag, onDragStop)
-      this.letters_map[id] = letter
+      let [id, char] = letters[i]
+      let randomColour = colours[Math.floor(Math.random() * colours.length)];
+      let letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, randomColour)
+      letter_map[id] = letter
       // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
     }
-    this.letters_map
+    this.letter_map = letter_map
   }
-  move_letter(id, position){
+  moveLetter(id, position) {
     try {
-      let letter = this.letters_map[id]
+      let letter = this.letter_map[id]
       letter.position(position.x,position.y)
     } catch (e) {
       console.log(e)
@@ -204,94 +215,64 @@ class LettersManager {
 }
 
 class Letter {
-  constructor(stage, id, char, x, y, onDrag, onDragStop) {
-    //const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
-    const colours = ["FFFFFF"]
-
-    function getPoints(char){
-      const points = {
-        1:"AEIOULNSTR",
-        2:"DG",
-        3:"BCMP",
-        4:"FHVWY",
-        5:"K",
-        8:"JX",
-        10:"QZ"
-      }
-      for (var i in points) {
-        if (points[i].toLowerCase().indexOf(char.toLowerCase()) != -1) {
-          return i
-        }
-      }
-      return 1
-    }
-
-    this.stage = stage
-    let randomColour = colours[Math.floor(Math.random() * colours.length)];
+  constructor(stage, id, char, x, y, onDrag, onDragStop, colour) {
     let container = new PIXI.Container()
-    let tile = PIXI.Sprite.fromImage('/images/blank_tile.jpg')
-    tile.scale.x = 0.09
-    tile.scale.y = 0.09
-    let text = new PIXI.Text(char, { font: '26px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 2 })
-    let value = new PIXI.Text(getPoints(char), { font: '12px Arial', fill: randomColour, align: 'center', stroke: '#FFFFFF', strokeThickness: 1 })
-    container.addChild(tile)
-    container.addChild(value)
+    let text = new PIXI.Text(char, { font: '22px rounds_blackregular', fill: colour, align: 'left' })
     container.addChild(text)
     container.interactive = true
     container.buttonMode = true
     text.anchor.set(0.5)
-    tile.anchor.set(0.5)
-    value.anchor = new PIXI.Point(-0.9,-0.2)
-    container.id = id
-    container.class = this
-    //container.scale.set(3)
+    this.id = id
+    let de = this.onDragEnd.bind(this)
+    let ds = this.onDragStart.bind(this)
+    let dm = this.onDragMove.bind(this)
     container
-        // events for drag start
-        .on('mousedown', this.onDragStart)
-        .on('touchstart', this.onDragStart)
-        // events for drag end
-        .on('mouseup', this.onDragEnd)
-        .on('mouseupoutside', this.onDragEnd)
-        .on('touchend', this.onDragEnd)
-        .on('touchendoutside', this.onDragEnd)
-        // events for drag move
-        .on('mousemove', this.onDragMove)
-        .on('touchmove', this.onDragMove)
+      // events for drag start
+      .on('mousedown', ds)
+      .on('touchstart', ds)
+      // events for drag end
+      .on('mouseup', de)
+      .on('mouseupoutside', de)
+      .on('touchend', de)
+      .on('touchendoutside', de)
+      // events for drag move
+      .on('mousemove', dm)
+      .on('touchmove', dm)
     container.position.x = x
     container.position.y = y
     this.letter = container
-    this.stage.addChild(container)
+    stage.addChild(container)
     this.broadcastDrag = onDrag
     this.broadcastDragStop = onDragStop
   }
-  position(x,y){
-    console.log("set position: ", x, y);
+  position(x, y) {
+    // console.log("set position: ", x, y);
     this.letter.position.x = x
     this.letter.position.y = y
   }
-  onDragStart(event){
+  onDragStart(event) {
     // store a reference to the data
     // the reason for this is because of multitouch
     // we want to track the movement of this particular touch
-    this.data = event.data
-    this.alpha = 0.5
-    this.dragging = true
+    event.target.data = event.data
+    event.target.alpha = 0.5
+    event.target.dragging = true
   }
-  onDragEnd(){
-    this.alpha = 1
-    this.dragging = false
+  onDragEnd(event){
+    event.target.alpha = 1
+    event.target.dragging = false
     // set the interaction data to null
-    this.data = null
+    event.target.data = null
     // TODO: Fix this with a js pub/sub solution
     // Here is a great one http://davidwalsh.name/pubsub-javascript
-    this.class.broadcastDragStop()
+    this.broadcastDragStop()
   }
-  onDragMove(){
-    if (this.dragging){
-      var newPosition = this.data.getLocalPosition(this.parent)
-      this.position.x = newPosition.x
-      this.position.y = newPosition.y
-      this.class.broadcastDrag(this.id,newPosition.x,newPosition.y)
+  onDragMove(event){
+    if (event.target.dragging){
+      var newPosition = event.target.data.getLocalPosition(event.target.parent)
+      event.target.position.x = newPosition.x
+      event.target.position.y = newPosition.y
+      this.broadcastDrag(this.id,newPosition.x,newPosition.y)
     }
   }
 }

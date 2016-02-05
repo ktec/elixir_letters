@@ -5207,35 +5207,35 @@ form.link, form.button {
     border-bottom: 0; } }
 
 @font-face {
-  font-family: 'alphafridgemagnets_regular';
-  src: url("/fonts/alphafridgemagnets-webfont.eot");
-  src: url("/fonts/alphafridgemagnets-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/alphafridgemagnets-webfont.woff2") format("woff2"), url("/fonts/alphafridgemagnets-webfont.woff") format("woff"), url("/fonts/alphafridgemagnets-webfont.ttf") format("truetype"), url("/fonts/alphafridgemagnets-webfont.svg#alphafridgemagnets_regular") format("svg");
+  font-family: 'rounds_blackregular';
+  src: url("/fonts/rounds_black-webfont.eot");
+  src: url("/fonts/rounds_black-webfont.eot?#iefix") format("embedded-opentype"), url("/fonts/rounds_black-webfont.woff2") format("woff2"), url("/fonts/rounds_black-webfont.woff") format("woff"), url("/fonts/rounds_black-webfont.ttf") format("truetype"), url("/fonts/rounds_black-webfont.svg#rounds_blackregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
-/* line 106, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 107, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #content {
   position: relative;
   top: 82px;
   bottom: 0; }
 
-/* line 112, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 113, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #username {
   margin: 4px; }
 
-/* line 116, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 117, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #letters-container {
   position: relative;
   margin: 0 auto; }
 
-/* line 122, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 123, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse p {
   position: relative;
   top: 40px;
   font-size: 18px;
   font-weight: bold; }
 
-/* line 132, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 133, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse {
   width: 26px;
   height: 26px;
