@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Multiplayer Fridge Magnets game written in the blazing fast elixir lang, running on the ultra powerful erlang vm, hosted by the delightfully easy heroku, sponsored by the smarts from Alliants and the invaluable consultation from Ventsi.">
+    <meta name="description" content="Multiplayer Fridge Magnets game written in the beautiful elixir lang, powered by erlang, hosted by the dokku.">
     <meta name="author" content="Keith Salisbury aka globalkeith">
 
-    <title>Hello Phoenix Letters!</title>
+    <title>Elixir Letters!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
@@ -21,16 +21,16 @@
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
+            <span class="icon-bar">asdasd</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Phoenix Elixir Letters</a>
+          <a class="navbar-brand" href="#">Elixir Letters</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav pull-right">
             <li>
-              <a href="https://github.com/ktec/elixir_letters">source</a>
+              <a href="https://github.com/ktec/elixir_letters">Source</a>
             </li>
             <li><a href="http://github.com/phoenixframework/phoenix">Learn more about Phoenix</a></li>
             <li><a>Users: <span id="user_count"></span></a></li>
