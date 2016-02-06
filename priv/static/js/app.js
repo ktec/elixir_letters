@@ -132,7 +132,6 @@ var App = (function () {
   _createClass(App, null, [{
     key: "loadFonts",
     value: function loadFonts() {
-
       // Load them fonts before starting...!
       WebFont.load({
         custom: {
@@ -195,6 +194,18 @@ var App = (function () {
       var onDragStop = function onDragStop(id, x, y) {
         chan.push("save:snapshot", {});
       };
+
+      // ensure the username input works as expcted
+      $username.keydown(function (event) {
+        if (event.which == 13) {
+          event.preventDefault();
+          $username.blur();
+        }
+      });
+
+      $container.on('click', function (e) {
+        $username.blur();
+      });
 
       // create the root of the scene graph
       var stage = new PIXI.Container(0x97c56e, true);
