@@ -166,7 +166,7 @@ var App = (function () {
       var $draggable = $(".draggable");
       var $client_id = this.guid();
       var $room = this.get_room();
-      var $container = $("#content");
+      var $container = $("#fridge");
 
       var chan = socket.chan("rooms:" + $room, { client_id: $client_id });
 
@@ -347,7 +347,6 @@ var LettersManager = (function () {
   }, {
     key: "createLetters",
     value: function createLetters(letters, stage, onDrag, onDragStop) {
-      var colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24", '#cc00ff'];
       var letter_map = {};
       for (var i in letters) {
         var _letters$i = _slicedToArray(letters[i], 2);
@@ -355,12 +354,17 @@ var LettersManager = (function () {
         var id = _letters$i[0];
         var char = _letters$i[1];
 
-        var randomColour = colours[Math.floor(Math.random() * colours.length)];
-        var letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, randomColour);
+        var letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, this.randomColour());
         letter_map[id] = letter;
         // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
       }
       this.letter_map = letter_map;
+    }
+  }, {
+    key: "randomColour",
+    value: function randomColour() {
+      var colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24", '#cc00ff'];
+      return colours[Math.floor(Math.random() * colours.length)];
     }
   }, {
     key: "moveLetter",

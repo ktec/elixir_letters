@@ -32,7 +32,7 @@ class App {
     const $draggable = $(".draggable")
     const $client_id = this.guid()
     const $room      = this.get_room()
-    const $container = $("#content")
+    const $container = $("#fridge")
 
     const chan = socket.chan("rooms:" + $room,
       { client_id: $client_id }
@@ -206,17 +206,19 @@ class LettersManager {
     }
   }
   createLetters(letters, stage, onDrag, onDragStop) {
-    const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
     var letter_map = {}
     for (var i in letters)
     {
       let [id, char] = letters[i]
-      let randomColour = colours[Math.floor(Math.random() * colours.length)];
-      let letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, randomColour)
+      let letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, this.randomColour())
       letter_map[id] = letter
       // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
     }
     this.letter_map = letter_map
+  }
+  randomColour() {
+    const colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24",'#cc00ff']
+    return colours[Math.floor(Math.random() * colours.length)];
   }
   moveLetter(id, position) {
     try {

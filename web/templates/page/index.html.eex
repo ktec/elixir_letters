@@ -7,3 +7,4 @@ function get_letters(letter_constructor) {
   ]
 }
 </script>
+<div id="fridge"></div>
