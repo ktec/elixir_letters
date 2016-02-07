@@ -19,11 +19,11 @@ defmodule ElixirLetters.RoomSupervisor do
   for the existing process with that `room_name`.
   """
   def start_room(room_name) do
-    case Supervisor.start_child(__MODULE__, [[],[name: room_name]]) do
-        {:ok, pid} -> pid
-        {:error, {:already_started, pid}} -> pid
-  #      res -> res
-      end
+    case Supervisor.start_child(__MODULE__, [room_name]) do
+      {:ok, pid} -> pid
+      {:error, {:already_started, pid}} -> pid
+#      res -> res
+    end
   end
 
 end

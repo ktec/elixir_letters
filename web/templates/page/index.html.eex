@@ -1,10 +1,12 @@
-<script>
-function get_letters(letter_constructor) {
-  return [
-    <%= for {<< letter_code :: utf8 >> = letter, count} <- @letters, letter_count <- 1..count do %>
-    ["<%= letter_code %>_<%= letter_count %>","<%= letter %>"],
-    <% end %>
-  ]
-}
-</script>
 <div id="fridge"></div>
+
+<script>
+  function get_letters() {
+    return [
+      <%= for {<< letter_code :: utf8 >> = letter, count} <- letters, letter_count <- 1..count do %>
+      ["<%= letter_code %>_<%= letter_count %>","<%= letter %>"],
+      <% end %>
+    ]
+  }
+  window.PLAYER_TOKEN = "<%= player_token %>";
+</script>

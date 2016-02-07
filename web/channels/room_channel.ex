@@ -24,6 +24,7 @@ defmodule ElixirLetters.RoomChannel do
       # Logger.debug "> join #{inspect pid}"
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})
+
       socket = assign(socket, :pid, pid)
       Logger.debug "> join #{inspect socket}"
       {:ok, socket}

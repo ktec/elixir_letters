@@ -17,12 +17,13 @@ defmodule ElixirLetters.UserSocket do
   #
   #  To deny connection, return `:error`.
   def connect(_params, socket) do
+    # {:ok, assign(socket, :user_id, UUID.uuid4)}
     {:ok, socket}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
-  #     def id(socket), do: "users_socket:#{socket.assigns.user_id}"
+  #  def id(socket), do: "users_socket:#{socket.assigns.user_id}"
   #
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:

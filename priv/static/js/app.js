@@ -150,7 +150,7 @@ var App = (function () {
 
       var socket = new _phoenix.Socket("/socket", {
         logger: function logger(kind, msg, data) {
-          //console.log(`${kind}: ${msg}`, data)
+          console.log(kind + ": " + msg, data);
         }
       });
 
@@ -164,7 +164,7 @@ var App = (function () {
       // const $input     = $("#message-input")
       var $username = $("#username");
       var $draggable = $(".draggable");
-      var $client_id = this.guid();
+      var $client_id = window.PLAYER_TOKEN;
       var $room = this.get_room();
       var $container = $("#fridge");
 
@@ -274,14 +274,6 @@ var App = (function () {
       }
       // console.log("room: ", room)
       return room;
-    }
-  }, {
-    key: "guid",
-    value: function guid() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-      }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
   }, {
     key: "find_or_create_cursor",

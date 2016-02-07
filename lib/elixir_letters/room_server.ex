@@ -19,13 +19,13 @@ defmodule ElixirLetters.RoomServer do
   @doc """
   Starts the process
   """
-  def start_link(state, opts) do
+  def start_link(room_name) do
     # opts = opts
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
-    room_name = Atom.to_string(opts[:name])
+    room_name = Atom.to_string(room_name)
     state = %Room{room_name: room_name}
-    Logger.debug "> RoomServer.start_link/1 #{inspect state} #{inspect opts}"
+    Logger.debug "> RoomServer.start_link/1 #{inspect state}"
 
     query = from s in Snapshot,
             where: s.room_name == ^room_name
@@ -38,7 +38,7 @@ defmodule ElixirLetters.RoomServer do
     # GenServer.call(__MODULE__, :initialize_room, room_name)
 
     Logger.debug "> STATE: #{inspect state}"
-    GenServer.start_link(__MODULE__, state, opts)
+    GenServer.start_link(__MODULE__, state)
   end
 
   @doc """

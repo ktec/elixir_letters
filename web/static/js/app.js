@@ -18,7 +18,7 @@ class App {
   static init(){
     let socket = new Socket("/socket", {
       logger: (kind, msg, data) => {
-        //console.log(`${kind}: ${msg}`, data)
+        console.log(`${kind}: ${msg}`, data)
       }
     })
 
@@ -30,7 +30,7 @@ class App {
     // const $input     = $("#message-input")
     const $username  = $("#username")
     const $draggable = $(".draggable")
-    const $client_id = this.guid()
+    const $client_id = window.PLAYER_TOKEN
     const $room      = this.get_room()
     const $container = $("#fridge")
 
@@ -144,17 +144,6 @@ class App {
     if (!room.length) { room = "lobby" }
     // console.log("room: ", room)
     return room
-  }
-
-  static guid() {
-    function s4() {
-      return Math.floor((1 + Math
-        .random()) * 0x10000)
-        .toString(16)
-        .substring(1)
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4()
   }
 
   static find_or_create_cursor(id, username) {
