@@ -5213,29 +5213,30 @@ form.link, form.button {
   font-weight: normal;
   font-style: normal; }
 
-/* line 107, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 106, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #content {
   position: relative;
   top: 82px;
   bottom: 0; }
 
-/* line 113, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 112, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #username {
   margin: 4px; }
 
-/* line 117, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 116, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 #letters-container {
   position: relative;
   margin: 0 auto; }
 
-/* line 123, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 122, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse p {
+  border: 2px solid green;
   position: relative;
-  top: 40px;
-  font-size: 18px;
+  top: 30px;
+  font-size: 9px;
   font-weight: bold; }
 
-/* line 133, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 132, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse {
   width: 26px;
   height: 26px;

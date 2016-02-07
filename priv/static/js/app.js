@@ -156,13 +156,14 @@ var App = (function () {
 
       socket.connect();
       socket.onClose(function (e) {
-        return console.log("CLOSE", e);
+        return console.log("SOCKET CLOSE", e);
       });
 
       // const $status    = $("#status")
       // const $messages  = $("#messages")
       // const $input     = $("#message-input")
       var $username = $("#username");
+      $username.val($.cookie("username"));
       var $draggable = $(".draggable");
       var $client_id = window.PLAYER_TOKEN;
       var $room = this.get_room();
@@ -200,11 +201,13 @@ var App = (function () {
         if (event.which == 13) {
           event.preventDefault();
           $username.blur();
+          $.cookie("username", $username.val());
         }
       });
 
       $container.on('click', function (e) {
         $username.blur();
+        $.cookie("username", $username.val());
       });
 
       // create the root of the scene graph
@@ -219,8 +222,7 @@ var App = (function () {
       background.position.y = 350 + window.innerHeight / 2;
       stage.addChild(background);
 
-      var letters_config = get_letters();
-      var lettersManager = new LettersManager(stage, letters_config, onDrag, onDragStop);
+      var lettersManager = new LettersManager(stage, get_letters(), onDrag, onDragStop);
 
       chan.on("join", function (msg) {
         // console.log("join", msg)
@@ -297,19 +299,14 @@ var PixiLayer = (function () {
     renderer.view.style.width = window.innerWidth + "px";
     renderer.view.style.height = window.innerHeight + "px";
     renderer.view.style.display = "block";
-
     renderer.view.id = "letters-container";
     container.append(renderer.view);
-    //
     this.animate(this.animate, renderer, stage);
   }
 
   _createClass(PixiLayer, [{
     key: "animate",
     value: function animate(_animate, renderer, stage) {
-      // for (var i in letters_map) {
-      //   letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
-      // }
       renderer.render(stage);
       requestAnimationFrame(function () {
         _animate(_animate, renderer, stage);
@@ -321,11 +318,11 @@ var PixiLayer = (function () {
 })();
 
 var LettersManager = (function () {
-  function LettersManager(stage, letters_config, onDrag, onDragStop) {
+  function LettersManager(stage, config, onDrag, onDragStop) {
     _classCallCheck(this, LettersManager);
 
     this.stage = stage;
-    this.createLetters(letters_config, stage, onDrag, onDragStop);
+    this.createLetters(config, stage, onDrag, onDragStop);
   }
 
   _createClass(LettersManager, [{
@@ -338,17 +335,11 @@ var LettersManager = (function () {
     }
   }, {
     key: "createLetters",
-    value: function createLetters(letters, stage, onDrag, onDragStop) {
+    value: function createLetters(config, stage, onDrag, onDragStop) {
       var letter_map = {};
-      for (var i in letters) {
-        var _letters$i = _slicedToArray(letters[i], 2);
-
-        var id = _letters$i[0];
-        var char = _letters$i[1];
-
-        var letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, this.randomColour());
-        letter_map[id] = letter;
-        // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
+      for (var i in config) {
+        var id = config[i];
+        letter_map[id] = new Letter(stage, id, 30, 30, onDrag, onDragStop, this.randomColour());
       }
       this.letter_map = letter_map;
     }
@@ -374,16 +365,22 @@ var LettersManager = (function () {
 })();
 
 var Letter = (function () {
-  function Letter(stage, id, char, x, y, onDrag, onDragStop, colour) {
+  function Letter(stage, id, x, y, onDrag, onDragStop, colour) {
     _classCallCheck(this, Letter);
 
+    var _id$split = id.split("_");
+
+    var _id$split2 = _slicedToArray(_id$split, 2);
+
+    var code = _id$split2[0];
+    var _ = _id$split2[1];
+
     var container = new PIXI.Container();
-    var text = new PIXI.Text(char, { font: '22px rounds_blackregular', fill: colour, align: 'left' });
+    var text = new PIXI.Text(String.fromCharCode(code), { font: '22px rounds_blackregular', fill: colour, align: 'left' });
     container.addChild(text);
     container.interactive = true;
     container.buttonMode = true;
     text.anchor.set(0.5);
-    this.id = id;
     var de = this.onDragEnd.bind(this);
     var ds = this.onDragStart.bind(this);
     var dm = this.onDragMove.bind(this);
@@ -396,8 +393,9 @@ var Letter = (function () {
     .on('mousemove', dm).on('touchmove', dm);
     container.position.x = x;
     container.position.y = y;
-    this.letter = container;
     stage.addChild(container);
+    this.id = id;
+    this.letter = container;
     this.broadcastDrag = onDrag;
     this.broadcastDragStop = onDragStop;
   }

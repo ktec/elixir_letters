@@ -2,11 +2,8 @@
 
 <script>
   function get_letters() {
-    return [
-      <%= for {<< letter_code :: utf8 >> = letter, count} <- letters, letter_count <- 1..count do %>
-      ["<%= letter_code %>_<%= letter_count %>","<%= letter %>"],
-      <% end %>
-    ]
+    return <%= raw Poison.Encoder.encode(letters_map, []) %>
   }
+
   window.PLAYER_TOKEN = "<%= player_token %>";
 </script>

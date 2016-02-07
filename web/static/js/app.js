@@ -23,12 +23,13 @@ class App {
     })
 
     socket.connect()
-    socket.onClose( e => console.log("CLOSE", e))
+    socket.onClose( e => console.log("SOCKET CLOSE", e))
 
     // const $status    = $("#status")
     // const $messages  = $("#messages")
     // const $input     = $("#message-input")
     const $username  = $("#username")
+    $username.val($.cookie("username"))
     const $draggable = $(".draggable")
     const $client_id = window.PLAYER_TOKEN
     const $room      = this.get_room()
@@ -62,12 +63,14 @@ class App {
         if ( event.which == 13 ) {
          event.preventDefault()
          $username.blur()
+         $.cookie("username", $username.val())
         }
       })
 
     $container
       .on('click', function(e) {
         $username.blur()
+        $.cookie("username", $username.val())
       })
 
 
@@ -83,8 +86,7 @@ class App {
     background.position.y = 350 + window.innerHeight/2
     stage.addChild(background)
 
-    const letters_config = get_letters()
-    const lettersManager = new LettersManager(stage, letters_config, onDrag, onDragStop)
+    const lettersManager = new LettersManager(stage, get_letters(), onDrag, onDragStop)
 
     chan.on("join", msg=>{
       // console.log("join", msg)
@@ -165,17 +167,12 @@ class PixiLayer {
     renderer.view.style.width = window.innerWidth + "px"
   	renderer.view.style.height = window.innerHeight + "px"
   	renderer.view.style.display = "block"
-
     renderer.view.id = "letters-container"
     container.append(renderer.view)
-    //
     this.animate(this.animate, renderer, stage)
   }
 
   animate(animate, renderer, stage) {
-    // for (var i in letters_map) {
-    //   letters_map[i].rotation += Math.random() * (0.1 - 0.001) + 0
-    // }
     renderer.render(stage)
     requestAnimationFrame(function(){
       animate(animate, renderer, stage)
@@ -184,9 +181,9 @@ class PixiLayer {
 }
 
 class LettersManager {
-  constructor(stage, letters_config, onDrag, onDragStop) {
+  constructor(stage, config, onDrag, onDragStop) {
     this.stage = stage
-    this.createLetters(letters_config, stage, onDrag, onDragStop)
+    this.createLetters(config, stage, onDrag, onDragStop)
   }
   setInitialPositions(positions) {
     // initialise the letter positions
@@ -194,14 +191,12 @@ class LettersManager {
       this.moveLetter(letter, positions[letter])
     }
   }
-  createLetters(letters, stage, onDrag, onDragStop) {
+  createLetters(config, stage, onDrag, onDragStop) {
     var letter_map = {}
-    for (var i in letters)
+    for (var i in config)
     {
-      let [id, char] = letters[i]
-      let letter = new Letter(stage, id, char, 30, 30, onDrag, onDragStop, this.randomColour())
-      letter_map[id] = letter
-      // createLetter(id, char, 30, 30) //Math.random() * window.innerWidth, Math.random() * window.innerHeight)
+      let id = config[i]
+      letter_map[id] = new Letter(stage, id, 30, 30, onDrag, onDragStop, this.randomColour())
     }
     this.letter_map = letter_map
   }
@@ -220,14 +215,14 @@ class LettersManager {
 }
 
 class Letter {
-  constructor(stage, id, char, x, y, onDrag, onDragStop, colour) {
+  constructor(stage, id, x, y, onDrag, onDragStop, colour) {
+    let [code, _] = id.split("_")
     let container = new PIXI.Container()
-    let text = new PIXI.Text(char, { font: '22px rounds_blackregular', fill: colour, align: 'left' })
+    let text = new PIXI.Text(String.fromCharCode(code), { font: '22px rounds_blackregular', fill: colour, align: 'left' })
     container.addChild(text)
     container.interactive = true
     container.buttonMode = true
     text.anchor.set(0.5)
-    this.id = id
     let de = this.onDragEnd.bind(this)
     let ds = this.onDragStart.bind(this)
     let dm = this.onDragMove.bind(this)
@@ -245,8 +240,9 @@ class Letter {
       .on('touchmove', dm)
     container.position.x = x
     container.position.y = y
-    this.letter = container
     stage.addChild(container)
+    this.id = id
+    this.letter = container
     this.broadcastDrag = onDrag
     this.broadcastDragStop = onDragStop
   }

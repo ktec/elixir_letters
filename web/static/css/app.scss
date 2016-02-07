@@ -101,7 +101,6 @@ form.link, form.button {
          url('/fonts/rounds_black-webfont.svg#rounds_blackregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 #content {
@@ -121,10 +120,10 @@ form.link, form.button {
 }
 
 .mouse p {
-  // border: 2px solid green;
+  border: 2px solid green;
   position: relative;
-  top: 40px;
-  font-size: 18px;
+  top: 30px;
+  font-size: 9px;
   font-weight: bold;
   //   margin-top: 1em;
   //   margin-right: 1em;
