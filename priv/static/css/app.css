@@ -5230,13 +5230,12 @@ form.link, form.button {
 
 /* line 122, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse p {
-  border: 2px solid green;
   position: relative;
   top: 30px;
   font-size: 9px;
-  font-weight: bold; }
+  text-align: center; }
 
-/* line 132, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
+/* line 133, /Users/globalkeith/code/elixir/elixir_letters/web/static/css/app.scss */
 .mouse {
   width: 26px;
   height: 26px;
