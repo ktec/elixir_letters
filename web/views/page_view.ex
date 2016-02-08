@@ -3,23 +3,7 @@ defmodule ElixirLetters.PageView do
   alias ElixirLetters.Letters
 
   def letters_map do
-    for {<<code::utf8>>, count} <- letters, letter_count <- 1..count do
-      "#{code}_#{letter_count}"
-    end
-  end
-
-  def letters do
-    Letters.get_letters
-  end
-
-  def colours do
-    Letters.get_colours
-  end
-
-  def get_colour do
-    colours
-      |> Enum.shuffle
-      |> Enum.take(1)
+    Letters.get_letters_map
   end
 
   def player_token do

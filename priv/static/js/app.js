@@ -338,16 +338,14 @@ var LettersManager = (function () {
     value: function createLetters(config, stage, onDrag, onDragStop) {
       var letter_map = {};
       for (var i in config) {
-        var id = config[i];
-        letter_map[id] = new Letter(stage, id, 30, 30, onDrag, onDragStop, this.randomColour());
+        var _config$i = _slicedToArray(config[i], 2);
+
+        var id = _config$i[0];
+        var colour = _config$i[1];
+
+        letter_map[id] = new Letter(stage, id, 30, 30, onDrag, onDragStop, colour);
       }
       this.letter_map = letter_map;
-    }
-  }, {
-    key: "randomColour",
-    value: function randomColour() {
-      var colours = ["#9C2E23", "#C5A02F", "#002F6B", "#3D6F24", '#cc00ff'];
-      return colours[Math.floor(Math.random() * colours.length)];
     }
   }, {
     key: "moveLetter",
