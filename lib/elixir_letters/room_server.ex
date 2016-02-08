@@ -5,13 +5,11 @@ defmodule ElixirLetters.RoomServer do
   import Ecto.Query
   require Logger
 
-  defmodule Room do
-    defstruct [
-      room_name: "lobby",
-      positions: %{},
-      users: %{},
-      user_count: 0
-    ]
+  defmodule State do
+    defstruct room_name: "lobby",
+              positions: %{},
+              users: %{},
+              user_count: 0
   end
 
   # Client
@@ -24,7 +22,7 @@ defmodule ElixirLetters.RoomServer do
     #   |> Keyword.put_new(:room, "lobby")
     #   |> Enum.reject(fn {_k,v} -> is_nil(v) end)
     room_name = Atom.to_string(room_name)
-    state = %Room{room_name: room_name}
+    state = %State{room_name: room_name}
     Logger.debug "> RoomServer.start_link/1 #{inspect state}"
 
     query = from s in Snapshot,
@@ -32,7 +30,7 @@ defmodule ElixirLetters.RoomServer do
     last_snapshot = query |> Snapshot.last |> Repo.one
 
     unless is_nil last_snapshot do
-      state = %Room{state | positions: last_snapshot.positions}
+      state = %State{state | positions: last_snapshot.positions}
     end
 
     # GenServer.call(__MODULE__, :initialize_room, room_name)
@@ -88,23 +86,23 @@ defmodule ElixirLetters.RoomServer do
   def handle_call(
       {:set_position, %{"id" => letter_id} = position},
       _from,state) do
-    %Room{positions: positions} = state
+    %State{positions: positions} = state
     positions = Map.put(positions, letter_id, position)
-    {:reply, :ok, %Room{state | positions: positions}}
+    {:reply, :ok, %State{state | positions: positions}}
   end
 
   def handle_call(:get_positions, _from, state) do
     {:reply, state.positions, state}
   end
 
-  def handle_call({:add_user, user_id, user}, _from, %Room{users: users} = state) do
+  def handle_call({:add_user, user_id, user}, _from, %State{users: users} = state) do
     users = Map.put(users, user_id, user)
-    {:reply, :ok, %Room{state | users: users}}
+    {:reply, :ok, %State{state | users: users}}
   end
 
-  def handle_call({:remove_user, user_id}, _from, %Room{users: users} = state) do
+  def handle_call({:remove_user, user_id}, _from, %State{users: users} = state) do
     users = Map.delete(users, user_id)
-    {:reply, :ok, %Room{state | users: users}}
+    {:reply, :ok, %State{state | users: users}}
   end
 
   def handle_call(:get_user_count, _from, state) do
@@ -133,7 +131,7 @@ defmodule ElixirLetters.RoomServer do
   #   last_snapshot = query |> Snapshot.last |> Repo.one
   #
   #   unless is_nil last_snapshot do
-  #     state = %Room{state | positions: last_snapshot.positions}
+  #     state = %State{state | positions: last_snapshot.positions}
   #   end
   #
   #   {:reply, :ok, state}
