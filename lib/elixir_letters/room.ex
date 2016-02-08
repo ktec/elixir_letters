@@ -1,6 +1,6 @@
 defmodule ElixirLetters.Room do
   use GenServer
-  alias ElixirLetters.{Repo,Snapshot}
+  alias ElixirLetters.{Repo,Snapshot,Endpoint}
   import Ecto.Query
 
   defmodule State do
@@ -80,6 +80,7 @@ defmodule ElixirLetters.Room do
 
   def handle_cast({:join, user_id, user}, state = %State{users: users}) do
     new_state = %State{state | users: Map.put(users, user_id, user)}
+    # broadcast_user_count(Map.size(new_state.users))
     {:noreply, new_state}
   end
 
@@ -115,4 +116,8 @@ defmodule ElixirLetters.Room do
       true -> %{}
     end
   end
+
+  # defp broadcast_user_count(count) do
+  #   Endpoint.broadcast!("rooms:*", "user_count:update", %{user_count: get_user_count(room_id)})
+  # end
 end
