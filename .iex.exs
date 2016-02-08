@@ -1,1 +1,1 @@
-alias ElixirLetters.{Letters,RoomServer,RoomSupervisor}
+alias ElixirLetters.{Letters,Room,RoomSupervisor}

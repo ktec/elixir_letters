@@ -4,7 +4,7 @@ defmodule ElixirLetters.RoomChannelTest do
   alias ElixirLetters.RoomChannel
 
   setup do
-    {:ok, _, socket} = subscribe_and_join(RoomChannel, "positions:lobby")
+    {:ok, _, socket} = subscribe_and_join(RoomChannel, "rooms:lobby")
     {:ok, socket: socket}
   end
 

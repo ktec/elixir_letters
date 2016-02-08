@@ -3,8 +3,9 @@ defmodule ElixirLetters.PageView do
   alias ElixirLetters.Letters
 
   def letters_map do
-    for {<< code :: utf8 >> = letter, count} <- letters, letter_count <- 1..count, do:
-    "#{code}_#{letter_count}"
+    for {<<code::utf8>>, count} <- letters, letter_count <- 1..count do
+      "#{code}_#{letter_count}"
+    end
   end
 
   def letters do

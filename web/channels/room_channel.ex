@@ -1,8 +1,7 @@
 defmodule ElixirLetters.RoomChannel do
   use ElixirLetters.Web, :channel
   #use Phoenix.Channel
-  alias ElixirLetters.RoomServer
-  alias ElixirLetters.RoomSupervisor
+  alias ElixirLetters.{Room,RoomSupervisor}
   require Logger
 
   @doc """
@@ -14,19 +13,13 @@ defmodule ElixirLetters.RoomChannel do
   """
   def join("rooms:" <> topic, payload, socket) do
     if authorized?(payload) do
-
-      # Logger.debug "> join"
-      # Logger.debug "> join #{inspect payload}"
-      # Logger.debug "> join"
       topic = String.slice(topic, 0, 100)
-
       pid = RoomSupervisor.start_room(String.to_atom(topic))
-      # Logger.debug "> join #{inspect pid}"
+
       Process.flag(:trap_exit, true)
       send(self, {:after_join, payload})
 
       socket = assign(socket, :pid, pid)
-      Logger.debug "> join #{inspect socket}"
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -34,45 +27,36 @@ defmodule ElixirLetters.RoomChannel do
   end
 
   def terminate(reason, socket) do
-    Logger.debug "> leave #{inspect reason}"
-    Logger.debug "> leave #{inspect socket}"
-    RoomServer.remove_user(socket.assigns[:pid], socket.assigns[:client_id])
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
+    Room.leave(socket.assigns[:pid], socket.assigns[:client_id])
+    broadcast! socket, "user_count:update", %{user_count: Room.get_user_count(socket.assigns.pid)}
     :ok
   end
 
   def handle_info({:after_join, %{"client_id" => client_id}}, socket) do
     Logger.debug "> after_join #{inspect socket.assigns}"
     socket = assign(socket, :client_id, client_id)
-    RoomServer.add_user(socket.assigns.pid, client_id, {})
-    broadcast! socket, "user_count:update", %{user_count: RoomServer.get_user_count(socket.assigns.pid)}
-    push socket, "join", %{status: "connected", positions: RoomServer.get_positions(socket.assigns.pid)}
+    room_id = socket.assigns.pid
+    Room.join(room_id, client_id, {})
+    broadcast! socket, "user_count:update", %{user_count: Room.get_user_count(room_id)}
+    push socket, "join", %{status: "connected", positions: Room.get_positions(room_id)}
     {:noreply, socket}
   end
 
   def handle_in("set:position", payload, socket) do
     #%{"id" => _letter_id, "left" => _left, "top" => _top} = payload["body"]
-    RoomServer.set_position(socket.assigns.pid, payload["body"])
+    Room.set_position(socket.assigns.pid, payload["body"])
     broadcast! socket, "update:position", payload
     {:noreply, socket}
   end
 
   def handle_in("save:snapshot", _payload, socket) do
-    _msg = RoomServer.save_snapshot(socket.assigns.pid)
+    Room.save(socket.assigns.pid)
     {:noreply, socket}
   end
 
   def handle_in("mousemove", payload, socket) do
     broadcast! socket, "mousemove", payload
-    # Do we really need to reply?
-    #{:reply, {:ok, payload}, assign(socket, :user, payload["user"])}
     {:noreply, socket}
-  end
-
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
   end
 
   # This is invoked every time a notification is being broadcast

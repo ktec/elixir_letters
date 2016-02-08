@@ -1,5 +1,5 @@
 defmodule ElixirLetters.RoomSupervisor do
-  alias ElixirLetters.RoomServer
+  alias ElixirLetters.Room
   require Logger
   use Supervisor
 
@@ -9,7 +9,7 @@ defmodule ElixirLetters.RoomSupervisor do
 
   def init([]) do
     children = [
-      worker(RoomServer, [], restart: :transient)
+      worker(Room, [], restart: :transient)
     ]
     supervise(children, strategy: :simple_one_for_one)
 	end
