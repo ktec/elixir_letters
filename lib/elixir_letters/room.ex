@@ -48,6 +48,13 @@ defmodule ElixirLetters.Room do
   end
 
   @doc """
+  Save a snapshot of the current state.
+  """
+  def save(pid) do
+    GenServer.cast(pid, :save)
+  end
+
+  @doc """
   Get the position of all characters in the room.
   """
   def get_positions(pid) do
@@ -59,13 +66,6 @@ defmodule ElixirLetters.Room do
   """
   def get_user_count(pid) do
     GenServer.call(pid, :get_user_count)
-  end
-
-  @doc """
-  Save a snapshot of the current state of the room.
-  """
-  def save(pid) do
-    GenServer.call(pid, :save)
   end
 
   # Server (callbacks)
