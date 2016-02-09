@@ -25,12 +25,9 @@ class App {
     socket.connect()
     socket.onClose( e => console.log("SOCKET CLOSE", e))
 
-    // const $status    = $("#status")
-    // const $messages  = $("#messages")
-    // const $input     = $("#message-input")
     const $username  = $("#username")
     $username.val($.cookie("username"))
-    const $draggable = $(".draggable")
+    // const $draggable = $(".draggable")
     const $client_id = window.PLAYER_TOKEN
     const $room      = this.get_room()
     const $container = $("#fridge")
@@ -73,7 +70,6 @@ class App {
         $.cookie("username", $username.val())
       })
 
-
     // create the root of the scene graph
     const stage = new PIXI.Container(0x97c56e, true)
     const renderer = new PixiLayer($container, chan, stage)
@@ -86,9 +82,9 @@ class App {
     background.position.y = 350 + window.innerHeight/2
     stage.addChild(background)
 
-    const lettersManager = new LettersManager(stage, get_letters(), onDrag, onDragStop)
+    const lettersManager = new LettersManager(stage, window.LETTERS, onDrag, onDragStop)
 
-    chan.on("join", msg=>{
+    chan.on("join", msg => {
       // console.log("join", msg)
       lettersManager.setInitialPositions(msg.positions)
       // $("#content").keydown(function (event){
@@ -185,12 +181,14 @@ class LettersManager {
     this.stage = stage
     this.createLetters(config, stage, onDrag, onDragStop)
   }
+
   setInitialPositions(positions) {
     // initialise the letter positions
     for (var letter in positions){
       this.moveLetter(letter, positions[letter])
     }
   }
+
   createLetters(config, stage, onDrag, onDragStop) {
     var letter_map = {}
     for (var i in config)
@@ -200,6 +198,7 @@ class LettersManager {
     }
     this.letter_map = letter_map
   }
+
   moveLetter(id, position) {
     try {
       let letter = this.letter_map[id]

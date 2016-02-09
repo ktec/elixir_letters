@@ -1,9 +1,6 @@
 <div id="fridge"></div>
 
 <script>
-  function get_letters() {
-    return <%= raw Poison.Encoder.encode(letters_map, []) %>
-  }
-
+  window.LETTERS = <%= raw Poison.Encoder.encode(letters_map, []) %>;
   window.PLAYER_TOKEN = "<%= player_token %>";
 </script>

@@ -159,12 +159,9 @@ var App = (function () {
         return console.log("SOCKET CLOSE", e);
       });
 
-      // const $status    = $("#status")
-      // const $messages  = $("#messages")
-      // const $input     = $("#message-input")
       var $username = $("#username");
       $username.val($.cookie("username"));
-      var $draggable = $(".draggable");
+      // const $draggable = $(".draggable")
       var $client_id = window.PLAYER_TOKEN;
       var $room = this.get_room();
       var $container = $("#fridge");
@@ -222,7 +219,7 @@ var App = (function () {
       background.position.y = 350 + window.innerHeight / 2;
       stage.addChild(background);
 
-      var lettersManager = new LettersManager(stage, get_letters(), onDrag, onDragStop);
+      var lettersManager = new LettersManager(stage, window.LETTERS, onDrag, onDragStop);
 
       chan.on("join", function (msg) {
         // console.log("join", msg)

@@ -71,7 +71,7 @@ defmodule ElixirLetters.Room do
   # Server (callbacks)
 
   def handle_call(:get_user_count, _from, state) do
-    {:reply, Map.size(state.users), state}
+    {:reply, state.user_count, state}
   end
 
   def handle_call(:get_positions, _from, state) do
@@ -79,13 +79,13 @@ defmodule ElixirLetters.Room do
   end
 
   def handle_cast({:join, user_id, user}, state = %State{users: users}) do
-    new_state = %State{state | users: Map.put(users, user_id, user)}
+    new_state = %State{state | users: Map.put(users, user_id, user), user_count: state.user_count + 1}
     # broadcast_user_count(Map.size(new_state.users))
     {:noreply, new_state}
   end
 
   def handle_cast({:leave, user_id}, state = %State{users: users}) do
-    new_state = %State{state | users: Map.delete(users, user_id)}
+    new_state = %State{state | users: Map.delete(users, user_id), user_count: state.user_count - 1}
     {:noreply, new_state}
   end
 
